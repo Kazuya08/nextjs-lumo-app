@@ -13,7 +13,7 @@ export default function Home() {
     <main className="p-4">
       <h1 className="text-xl font-bold mb-4">Lista de Tarefas</h1>
       <ul className="space-y-2">
-        {data?.slice(0, 5).map((todo: any) => (
+        {data?.slice(0, 5).map((todo: { id: string, title: string }) => (
           <li key={todo.id} className="flex items-center gap-2">
             <span>{todo.title}</span>
           </li>
