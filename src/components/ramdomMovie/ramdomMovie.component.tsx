@@ -1,0 +1,91 @@
+'use client'
+
+import { Button } from '@/components/ui/button';
+import { LoadingScreen } from '@/components/ui/loading-screen';
+import React from 'react'
+import useRamdomMovie from './useRamdomMovie';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+
+export default function RamdomMovie() {
+    const { methods, optionsGenres, loadingSearch, selectedRandomMovie, handleSubmit } = useRamdomMovie();
+
+    const urlImageApi = `${process.env.NEXT_PUBLIC_TMDB_URL_IMAGE}/w300`
+
+    return (
+        <>
+            {loadingSearch && <LoadingScreen message="Em busca do filme..." />}
+            <div className="flex p-20 justify-center flex-col items-center">
+
+                <h1 className="text-3xl font-bold mb-4">Qual será o filme hoje?</h1>
+
+
+                <Form {...methods}>
+                    <form onSubmit={handleSubmit} className="space-y-8">
+                        <FormField
+                            control={methods.control}
+                            name="category"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Categoria</FormLabel>
+                                    <FormControl>
+                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                            <SelectTrigger className="w-[180px]">
+                                                <SelectValue placeholder="Categoria" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {optionsGenres.map((option) => (
+                                                    <SelectItem key={option.id} value={String(option.id)}>
+                                                        {option.name}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={methods.control}
+                            name="time"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Duração</FormLabel>
+                                    <FormControl>
+                                        <Input className='w-[180px]' type="number" placeholder="Duração máxima" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <div className='flex items-center justify-center'>
+                            <Button type="submit">Estou com sorte</Button>
+                        </div>
+                    </form>
+                </Form>
+
+
+
+
+
+                <div className='flex items-center flex-col space-y-5 my-10'>
+                    {selectedRandomMovie?.poster_path && <img src={urlImageApi + selectedRandomMovie?.poster_path} alt={selectedRandomMovie?.title} />}
+                    <div className='flex flex-col space-y-5 w-[600px]'>
+                        {selectedRandomMovie?.title && <><p>Título: {selectedRandomMovie?.title ?? ''}</p></>}
+                        {selectedRandomMovie?.overview && <div className='space-y-2'>
+                            <p>Descrição:</p>
+                            <p> {selectedRandomMovie?.overview ?? ''}</p>
+                        </div>}
+                        {selectedRandomMovie?.release_date && <p>Data de lançamento: {selectedRandomMovie?.release_date ?? ''}</p>}
+                    </div>
+                </div>
+
+
+            </div>
+        </>
+    )
+}

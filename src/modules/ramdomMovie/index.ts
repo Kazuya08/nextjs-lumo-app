@@ -1,0 +1,1 @@
+export { ramdomMovieSchema } from './schemas/ramdomMovie.schema';
