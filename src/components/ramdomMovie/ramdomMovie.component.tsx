@@ -86,13 +86,20 @@ export default function RamdomMovie() {
 
                 <div className='flex items-center flex-col space-y-5 my-10'>
                     {selectedRandomMovie?.poster_path && <img src={urlImageApi + selectedRandomMovie?.poster_path} alt={selectedRandomMovie?.title} />}
-                    <div className='flex flex-col space-y-5 w-[600px]'>
-                        {selectedRandomMovie?.title && <><p>Título: {selectedRandomMovie?.title ?? ''}</p></>}
-                        {selectedRandomMovie?.overview && <div className='space-y-2'>
-                            <p>Descrição:</p>
-                            <p> {selectedRandomMovie?.overview ?? ''}</p>
-                        </div>}
-                        {selectedRandomMovie?.release_date && <p>Data de lançamento: {selectedRandomMovie?.release_date ?? ''}</p>}
+
+                    <div className="flex w-full flex-col space-y-5 justify-center overflow-hidden break-words text-center sm:text-left">
+                        {selectedRandomMovie?.title && <p className="w-full max-w-[90vw] break-words">Título: {selectedRandomMovie.title}</p>}
+
+                        {selectedRandomMovie?.overview && (
+                            <div className="space-y-2">
+                                <p>Descrição:</p>
+                                <p className="w-full max-w-[90vw] break-words">{selectedRandomMovie.overview}</p>
+                            </div>
+                        )}
+
+                        {selectedRandomMovie?.release_date && (
+                            <p className="w-full max-w-[90vw] break-words">Data de lançamento: {selectedRandomMovie.release_date}</p>
+                        )}
                     </div>
                 </div>
 
