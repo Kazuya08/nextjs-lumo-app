@@ -7,6 +7,7 @@ import useRamdomMovie from './useRamdomMovie';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import Image from 'next/image';
 
 export default function RamdomMovie() {
     const { methods, optionsGenres, loadingSearch, selectedRandomMovie, handleSubmit } = useRamdomMovie();
@@ -16,10 +17,21 @@ export default function RamdomMovie() {
     return (
         <>
             {loadingSearch && <LoadingScreen message="Em busca do filme..." />}
-            <div className="flex p-20 justify-center flex-col items-center">
+            <div className="flex p-20 justify-center flex-col items-center relative">
+
+                <div className="absolute top-2 right-1 bg-black bg-opacity-50 p-2 rounded-lg">
+                    <a href="https://www.themoviedb.org" target="_blank" rel="noopener noreferrer">
+                        <Image
+                            src="/assets/logos/tmbd-logo.svg"
+                            alt="TMDB Logo"
+                            width={100}
+                            height={100}
+                            className="w-24"
+                        />
+                    </a>
+                </div>
 
                 <h1 className="text-3xl font-bold mb-4">Qual será o filme hoje?</h1>
-
 
                 <Form {...methods}>
                     <form onSubmit={handleSubmit} className="space-y-8">
