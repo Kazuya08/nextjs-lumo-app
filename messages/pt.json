@@ -1,5 +1,16 @@
 {
+    "GameList": {
+        "placeholder": "Buscar jogo no IGDB…",
+        "emptyQuery": "Digite para buscar jogos no IGDB.",
+        "loading": "Carregando…",
+        "emptyResults": "Nenhum jogo encontrado.",
+        "noPlatforms": "Plataformas não informadas",
+        "hours": "Tempo médio para zerar: ~{hours}h",
+        "hoursHastily": "As pressas: ~{hours}h",
+        "hoursComplete": "Completo: ~{hours}h",
+        "coverAlt": "Capa de {title}"
+    },
     "HomePage": {
-      "title": "Oi mundo!"
+        "title": "Oi mundo!"
     }
 }

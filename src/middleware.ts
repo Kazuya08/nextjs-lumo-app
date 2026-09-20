@@ -1,4 +1,6 @@
 import { MiddlewareConfig, NextRequest, NextResponse } from "next/server"
+import { AUTH_COOKIE_NAME } from "./modules/auth/types";
+import { verifySessionToken } from "./modules/auth/token";
 
 const publicRoutes = [
     { path: '/sign-in', whenauthenticated: 'redirect' },
@@ -9,16 +11,17 @@ const publicRoutes = [
 
 const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = '/sign-in'
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
     const path = request.nextUrl.pathname;
     const publicRoute = publicRoutes.find(route => route.path === path);
-    const authToken = request.cookies.get('token')
+    const token = request.cookies.get(AUTH_COOKIE_NAME)?.value;
+    const session = token ? await verifySessionToken(token) : null;
 
-    if (!authToken && publicRoute) {
+    if (!session && publicRoute) {
         return NextResponse.next();
     }
 
-    if (!authToken && !publicRoute) {
+    if (!session && !publicRoute) {
         const redirectUrl = request.nextUrl.clone();
 
         redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE
@@ -26,19 +29,12 @@ export function middleware(request: NextRequest) {
         return NextResponse.redirect(redirectUrl)
     }
 
-    if (authToken && publicRoute && publicRoute.whenauthenticated === 'redirect') {
+    if (session && publicRoute && publicRoute.whenauthenticated === 'redirect') {
         const redirectUrl = request.nextUrl.clone();
 
         redirectUrl.pathname = '/'
 
         return NextResponse.redirect(redirectUrl)
-    }
-
-    if (authToken && !publicRoute) {
-        //TODO: Checar se o JWT está EXPIRADO - sem chamar o back apenas a data de expiracao
-        // Se sim, remover o cookie e redirecionar o usuario para o login
-
-        return NextResponse.next()
     }
 
     return NextResponse.next()

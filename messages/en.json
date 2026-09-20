@@ -1,5 +1,16 @@
 {
+    "GameList": {
+        "placeholder": "Search games on IGDB…",
+        "emptyQuery": "Type to search games on IGDB.",
+        "loading": "Loading…",
+        "emptyResults": "No games found.",
+        "noPlatforms": "Platforms not informed",
+        "hours": "Average time to beat: ~{hours}h",
+        "hoursHastily": "Hastily: ~{hours}h",
+        "hoursComplete": "Completionist: ~{hours}h",
+        "coverAlt": "Cover of {title}"
+    },
     "HomePage": {
-      "title": "Hello world!"
+        "title": "Hello world!"
     }
-  }
+}

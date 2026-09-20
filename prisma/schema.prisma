@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL_POOLED")
+  directUrl = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(cuid())
+  email         String         @unique
+  name          String
+  passwordHash  String
+  createdAt     DateTime       @default(now())
+  finishedGames FinishedGame[]
+}
+
+model FinishedGame {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title        String
+  coverUrl     String?
+  platform     String
+  finishedDate DateTime
+  totalHours   Float?
+  rating       Float?
+  igdbId       Int?
+  createdAt    DateTime @default(now())
+
+  @@index([userId, finishedDate])
+}
