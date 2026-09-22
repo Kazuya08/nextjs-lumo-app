@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, type LoginFormData } from '@/modules/auth';
@@ -17,6 +18,7 @@ interface LoginFormProps {
 }
 
 export function LoginForm({ onSuccess }: LoginFormProps) {
+    const router = useRouter();
     const [showPassword, setShowPassword] = useState(false);
     const { login, isLoading, error, clearError } = useAuth();
 
@@ -32,7 +34,11 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
         try {
             clearError();
             await login(data);
-            onSuccess?.();
+            if (onSuccess) {
+                onSuccess();
+            } else {
+                router.push('/finished-games');
+            }
         } catch (err) {
             console.log(err)
             // Error is handled by the context

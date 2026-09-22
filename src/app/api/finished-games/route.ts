@@ -41,6 +41,7 @@ export async function POST(req: Request) {
         cover: body?.cover ?? null,
         platform: parsed.data.platform,
         finishedDate: parsed.data.finishedDate,
+        finishedTime: parsed.data.finishedTime,
         totalHours: parsed.data.totalHours,
         rating: parsed.data.rating,
     });

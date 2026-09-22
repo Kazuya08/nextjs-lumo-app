@@ -1,14 +1,18 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
     finishedGameSchema,
     type FinishedGameFormData,
 } from '@/modules/finishedGames';
-import { useCreateFinishedGame } from '@/modules/finishedGames/useCases/useFinishedGames.useCase';
+import {
+    useCreateFinishedGame,
+    useUpdateFinishedGame,
+} from '@/modules/finishedGames/useCases/useFinishedGames.useCase';
 import type { CatalogGame } from '@/modules/catalog/types';
+import type { FinishedGame } from '@/modules/finishedGames/types';
 import { GameSearchCombobox } from '@/components/finishedGames/GameSearchCombobox';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -42,9 +46,20 @@ const COMMON_PLATFORMS = [
     'Mobile',
 ];
 
-export function FinishedGameForm() {
+interface FinishedGameFormProps {
+    variant?: 'card' | 'sheet';
+    game?: FinishedGame;
+    onSuccess?: () => void;
+}
+
+export function FinishedGameForm({ variant = 'card', game, onSuccess }: FinishedGameFormProps) {
+    const isEditing = Boolean(game);
     const [selectedGame, setSelectedGame] = useState<CatalogGame | null>(null);
-    const { mutate, isPending, error } = useCreateFinishedGame();
+    const createMutation = useCreateFinishedGame();
+    const updateMutation = useUpdateFinishedGame();
+
+    const isPending = isEditing ? updateMutation.isPending : createMutation.isPending;
+    const error = isEditing ? updateMutation.error : createMutation.error;
 
     const {
         register,
@@ -55,13 +70,23 @@ export function FinishedGameForm() {
         formState: { errors },
     } = useForm<FinishedGameFormData>({
         resolver: zodResolver(finishedGameSchema),
-        defaultValues: {
-            title: '',
-            platform: '',
-            finishedDate: '',
-            totalHours: undefined,
-            rating: undefined,
-        },
+        defaultValues: game
+            ? {
+                  title: game.title,
+                  platform: game.platform,
+                  finishedDate: game.finishedDate,
+                  finishedTime: game.finishedTime,
+                  totalHours: game.totalHours,
+                  rating: game.rating,
+              }
+            : {
+                  title: '',
+                  platform: '',
+                  finishedDate: '',
+                  finishedTime: '',
+                  totalHours: undefined,
+                  rating: undefined,
+              },
     });
 
     const platform = watch('platform');
@@ -71,171 +96,199 @@ export function FinishedGameForm() {
         return Array.from(new Set([...gamePlatforms, ...COMMON_PLATFORMS]));
     }, [selectedGame]);
 
-    const handleGameSelect = (game: CatalogGame) => {
-        setSelectedGame(game);
-        setValue('title', game.title, { shouldValidate: true });
-        setValue('platform', game.platforms[0] ?? '', { shouldValidate: true });
-        setValue('totalHours', game.suggestedHours, { shouldValidate: true });
+    const handleGameSelect = (catalogGame: CatalogGame) => {
+        setSelectedGame(catalogGame);
+        setValue('title', catalogGame.title, { shouldValidate: true });
+        setValue('platform', catalogGame.platforms[0] ?? '', { shouldValidate: true });
+        setValue('totalHours', catalogGame.suggestedHours, { shouldValidate: true });
     };
 
     const onSubmit = (data: FinishedGameFormData) => {
-        mutate(
-            {
-                title: data.title,
-                cover: selectedGame?.cover ?? null,
-                platform: data.platform,
-                finishedDate: data.finishedDate,
-                totalHours: data.totalHours,
-                rating: data.rating,
-            },
-            {
-                onSuccess: () => {
-                    setSelectedGame(null);
-                    reset();
-                },
-            }
-        );
+        const payload = {
+            title: data.title,
+            cover: selectedGame?.cover ?? game?.cover ?? null,
+            platform: data.platform,
+            finishedDate: data.finishedDate,
+            finishedTime: data.finishedTime,
+            totalHours: data.totalHours,
+            rating: data.rating,
+        };
+
+        const handleSuccess = () => {
+            setSelectedGame(null);
+            reset();
+            onSuccess?.();
+        };
+
+        if (game) {
+            updateMutation.mutate({ id: game.id, input: payload }, { onSuccess: handleSuccess });
+        } else {
+            createMutation.mutate(payload, { onSuccess: handleSuccess });
+        }
     };
+
+    const formFields = (
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            {error && (
+                <Alert variant="destructive">
+                    <AlertDescription>{error.message}</AlertDescription>
+                </Alert>
+            )}
+
+            <div className="space-y-2">
+                <Label htmlFor="game-search">Jogo</Label>
+                <GameSearchCombobox onSelect={handleGameSelect} disabled={isPending} />
+
+                {selectedGame && (
+                    <div className="mt-3 flex items-center gap-3 rounded-md border p-3">
+                        {selectedGame.cover ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                                src={selectedGame.cover}
+                                alt={`Capa de ${selectedGame.title}`}
+                                className="h-20 w-14 shrink-0 rounded-md object-cover"
+                            />
+                        ) : (
+                            <div className="h-20 w-14 shrink-0 rounded-md bg-muted" />
+                        )}
+                        <div className="min-w-0">
+                            <p className="truncate font-medium">{selectedGame.title}</p>
+                            <p className="truncate text-sm text-muted-foreground">
+                                {selectedGame.platforms.join(', ')}
+                            </p>
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            <div className="space-y-2">
+                <Label htmlFor="title">Título</Label>
+                <Input
+                    id="title"
+                    placeholder="Selecione um jogo na busca ou digite manualmente"
+                    {...register('title')}
+                    disabled={isPending}
+                />
+                {errors.title && (
+                    <p className="text-sm text-destructive">{errors.title.message}</p>
+                )}
+            </div>
+
+            <div className="space-y-2">
+                <Label htmlFor="platform">Plataforma</Label>
+                <Select
+                    value={platform || undefined}
+                    onValueChange={(value) => setValue('platform', value, { shouldValidate: true })}
+                >
+                    <SelectTrigger id="platform">
+                        <SelectValue placeholder="Selecione a plataforma" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {platformOptions.map((option) => (
+                            <SelectItem key={option} value={option}>
+                                {option}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
+                {errors.platform && (
+                    <p className="text-sm text-destructive">{errors.platform.message}</p>
+                )}
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+                <div className="space-y-2">
+                    <Label htmlFor="finishedDate">Data em que zerou</Label>
+                    <Input
+                        id="finishedDate"
+                        type="date"
+                        {...register('finishedDate')}
+                        disabled={isPending}
+                    />
+                    {errors.finishedDate && (
+                        <p className="text-sm text-destructive">
+                            {errors.finishedDate.message}
+                        </p>
+                    )}
+                </div>
+
+                <div className="space-y-2">
+                    <Label htmlFor="finishedTime">Hora em que zerou (opcional)</Label>
+                    <Input
+                        id="finishedTime"
+                        type="time"
+                        {...register('finishedTime')}
+                        disabled={isPending}
+                    />
+                    {errors.finishedTime && (
+                        <p className="text-sm text-destructive">
+                            {errors.finishedTime.message}
+                        </p>
+                    )}
+                </div>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+                <div className="space-y-2">
+                    <Label htmlFor="totalHours">Horas total (opcional)</Label>
+                    <Input
+                        id="totalHours"
+                        type="number"
+                        min="0"
+                        step="0.5"
+                        placeholder="Ex.: 40"
+                        {...register('totalHours')}
+                        disabled={isPending}
+                    />
+                    {errors.totalHours && (
+                        <p className="text-sm text-destructive">
+                            {errors.totalHours.message}
+                        </p>
+                    )}
+                </div>
+
+                <div className="space-y-2">
+                    <Label htmlFor="rating">Nota (opcional)</Label>
+                    <Input
+                        id="rating"
+                        type="number"
+                        min="1"
+                        max="10"
+                        step="0.1"
+                        placeholder="1 a 10"
+                        {...register('rating')}
+                        disabled={isPending}
+                    />
+                    {errors.rating && (
+                        <p className="text-sm text-destructive">
+                            {errors.rating.message}
+                        </p>
+                    )}
+                </div>
+            </div>
+
+            <Button type="submit" className="w-full" disabled={isPending}>
+                {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                {isEditing ? 'Salvar alterações' : 'Salvar'}
+            </Button>
+        </form>
+    );
+
+    if (variant === 'sheet') {
+        return formFields;
+    }
 
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Cadastrar jogo zerado</CardTitle>
+                <CardTitle>{isEditing ? 'Editar jogo zerado' : 'Cadastrar jogo zerado'}</CardTitle>
                 <CardDescription>
-                    Busque o jogo para preencher título, capa e plataforma
+                    {isEditing
+                        ? 'Atualize as informações do jogo zerado.'
+                        : 'Busque o jogo para preencher título, capa e plataforma'}
                 </CardDescription>
             </CardHeader>
-            <CardContent>
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                    {error && (
-                        <Alert variant="destructive">
-                            <AlertDescription>{error.message}</AlertDescription>
-                        </Alert>
-                    )}
-
-                    <div className="space-y-2">
-                        <Label htmlFor="game-search">Jogo</Label>
-                        <GameSearchCombobox onSelect={handleGameSelect} disabled={isPending} />
-
-                        {selectedGame && (
-                            <div className="mt-3 flex items-center gap-3 rounded-md border p-3">
-                                {selectedGame.cover ? (
-                                    // eslint-disable-next-line @next/next/no-img-element
-                                    <img
-                                        src={selectedGame.cover}
-                                        alt={`Capa de ${selectedGame.title}`}
-                                        className="h-20 w-14 shrink-0 rounded-md object-cover"
-                                    />
-                                ) : (
-                                    <div className="h-20 w-14 shrink-0 rounded-md bg-muted" />
-                                )}
-                                <div className="min-w-0">
-                                    <p className="truncate font-medium">{selectedGame.title}</p>
-                                    <p className="truncate text-sm text-muted-foreground">
-                                        {selectedGame.platforms.join(', ')}
-                                    </p>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-
-                    <div className="space-y-2">
-                        <Label htmlFor="title">Título</Label>
-                        <Input
-                            id="title"
-                            placeholder="Selecione um jogo na busca ou digite manualmente"
-                            {...register('title')}
-                            disabled={isPending}
-                        />
-                        {errors.title && (
-                            <p className="text-sm text-destructive">{errors.title.message}</p>
-                        )}
-                    </div>
-
-                    <div className="space-y-2">
-                        <Label htmlFor="platform">Plataforma</Label>
-                        <Select
-                            value={platform || undefined}
-                            onValueChange={(value) =>
-                                setValue('platform', value, { shouldValidate: true })
-                            }
-                        >
-                            <SelectTrigger id="platform">
-                                <SelectValue placeholder="Selecione a plataforma" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                {platformOptions.map((option) => (
-                                    <SelectItem key={option} value={option}>
-                                        {option}
-                                    </SelectItem>
-                                ))}
-                            </SelectContent>
-                        </Select>
-                        {errors.platform && (
-                            <p className="text-sm text-destructive">{errors.platform.message}</p>
-                        )}
-                    </div>
-
-                    <div className="grid gap-4 sm:grid-cols-3">
-                        <div className="space-y-2">
-                            <Label htmlFor="finishedDate">Data em que zerou</Label>
-                            <Input
-                                id="finishedDate"
-                                type="date"
-                                {...register('finishedDate')}
-                                disabled={isPending}
-                            />
-                            {errors.finishedDate && (
-                                <p className="text-sm text-destructive">
-                                    {errors.finishedDate.message}
-                                </p>
-                            )}
-                        </div>
-
-                        <div className="space-y-2">
-                            <Label htmlFor="totalHours">Horas total (opcional)</Label>
-                            <Input
-                                id="totalHours"
-                                type="number"
-                                min="0"
-                                step="0.5"
-                                placeholder="Ex.: 40"
-                                {...register('totalHours')}
-                                disabled={isPending}
-                            />
-                            {errors.totalHours && (
-                                <p className="text-sm text-destructive">
-                                    {errors.totalHours.message}
-                                </p>
-                            )}
-                        </div>
-
-                        <div className="space-y-2">
-                            <Label htmlFor="rating">Nota (opcional)</Label>
-                            <Input
-                                id="rating"
-                                type="number"
-                                min="1"
-                                max="10"
-                                step="0.1"
-                                placeholder="1 a 10"
-                                {...register('rating')}
-                                disabled={isPending}
-                            />
-                            {errors.rating && (
-                                <p className="text-sm text-destructive">
-                                    {errors.rating.message}
-                                </p>
-                            )}
-                        </div>
-                    </div>
-
-                    <Button type="submit" className="w-full sm:w-auto" disabled={isPending}>
-                        {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                        Salvar
-                    </Button>
-                </form>
-            </CardContent>
+            <CardContent>{formFields}</CardContent>
         </Card>
     );
 }

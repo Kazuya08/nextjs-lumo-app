@@ -4,6 +4,7 @@ export interface FinishedGame {
     cover: string | null;
     platform: string;
     finishedDate: string;
+    finishedTime?: string;
     totalHours?: number;
     rating?: number;
     createdAt: string;
@@ -14,6 +15,7 @@ export interface CreateFinishedGameInput {
     cover: string | null;
     platform: string;
     finishedDate: string;
+    finishedTime?: string;
     totalHours?: number;
     rating?: number;
 }

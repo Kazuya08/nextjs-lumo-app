@@ -10,6 +10,13 @@ export const finishedGameSchema = z.object({
     finishedDate: z
         .string()
         .min(1, 'Data é obrigatória'),
+    finishedTime: z.preprocess(
+        (value) => (value === '' || value == null ? undefined : value),
+        z
+            .string()
+            .regex(/^([01]\d|2[0-3]):[0-5]\d$/, 'Hora inválida')
+            .optional()
+    ),
     totalHours: z.preprocess(
         (value) => (value === '' || value == null ? undefined : Number(value)),
         z
