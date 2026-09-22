@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import { ThemeProvider } from "@/components/global/theme-provider";
 import { SiteHeader } from "@/components/global/site-header";
+import { SiteFooter } from "@/components/global/site-footer";
 import { AuthProvider } from "@/contexts/AuthContext";
 
 const geistSans = Geist({
@@ -44,7 +45,8 @@ export default function RootLayout({
                             <NextIntlClientProvider locale="pt" messages={ptMessages}>
                                 <div className="relative flex min-h-screen flex-col">
                                     <SiteHeader />
-                                    <main className="flex-1">{children}</main>
+                                    <main className="flex-1 w-full max-w-[1200px] mx-auto px-6 py-8">{children}</main>
+                                    <SiteFooter />
                                 </div>
                             </NextIntlClientProvider>
                         </AuthProvider>

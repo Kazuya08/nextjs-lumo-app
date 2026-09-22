@@ -1,35 +1,30 @@
-"use client"
 import Link from "next/link"
-import { cn } from "@/lib/utils"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Button } from "@/components/ui/button"
+import { Bell, Search, User, X } from "lucide-react"
 
-interface MainNavProps {
-    items?: {
-        title: string
-        href: string
-    }[]
-}
-
-export function MainNav({ items }: MainNavProps) {
+export function MainNav() {
     return (
-        <div className="flex gap-6 md:gap-10">
-            <Link href="/" className="flex items-center space-x-2">
-                <span className="inline-block font-bold">LOGO</span>
+        <nav className="flex items-center gap-1 sm:gap-6 text-sm font-medium">
+            <Link 
+                href="/" 
+                className="px-3 py-1.5 rounded-md transition-all duration-200 text-muted-foreground hover:bg-primary/10 hover:text-primary active:bg-primary/20"
+            >
+                Início
             </Link>
-            {items?.length ? (
-                <nav className="hidden gap-6 md:flex">
-                    {items.map((item) => (
-                        <Link
-                            key={item.href}
-                            href={item.href}
-                            className={cn(
-                                "flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-primary",
-                            )}
-                        >
-                            {item.title}
-                        </Link>
-                    ))}
-                </nav>
-            ) : null}
-        </div>
+            <Link 
+                href="/" 
+                className="px-3 py-1.5 rounded-md transition-all duration-200 text-muted-foreground hover:bg-primary/10 hover:text-primary active:bg-primary/20"
+            >
+                Comunidade
+            </Link>
+        </nav>
     )
 }
