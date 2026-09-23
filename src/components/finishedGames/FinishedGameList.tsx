@@ -1,60 +1,23 @@
 'use client';
 
 import { useState } from 'react';
-import {
-    useFinishedGames,
-    useRemoveFinishedGame,
-} from '@/modules/finishedGames/useCases/useFinishedGames.useCase';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { CalendarDays, Clock, Gamepad2, Star, Trash2, Trophy } from 'lucide-react';
+import { useRemoveFinishedGame } from '@/modules/finishedGames/useCases/useFinishedGames.useCase';
+import { FinishedGameCard } from '@/components/finishedGames/FinishedGameCard';
+import { FinishedGameListItem } from '@/components/finishedGames/FinishedGameListItem';
+import { FinishedGameEditDialog } from '@/components/finishedGames/FinishedGameEditDialog';
+import { Trophy } from 'lucide-react';
+import type { FinishedGame } from '@/modules/finishedGames/types';
+import type { FinishedGameView } from '@/components/finishedGames/utils';
 
-function formatDate(iso: string): string {
-    const [year, month, day] = iso.split('-');
-    if (!year || !month || !day) return iso;
-    return `${day}/${month}/${year}`;
+interface FinishedGameListProps {
+    games: FinishedGame[];
+    view: FinishedGameView;
 }
 
-export function FinishedGameList() {
-    const { data, isLoading, error } = useFinishedGames();
+export function FinishedGameList({ games, view }: FinishedGameListProps) {
     const { mutate, isPending } = useRemoveFinishedGame();
     const [removingId, setRemovingId] = useState<string | null>(null);
-
-    if (isLoading) {
-        return (
-            <div className="space-y-4">
-                {Array.from({ length: 3 }).map((_, index) => (
-                    <Card key={index} className="flex gap-4 p-4">
-                        <Skeleton className="h-28 w-20 rounded-md" />
-                        <div className="flex-1 space-y-2">
-                            <Skeleton className="h-5 w-1/3" />
-                            <Skeleton className="h-4 w-1/4" />
-                            <Skeleton className="h-4 w-1/2" />
-                        </div>
-                    </Card>
-                ))}
-            </div>
-        );
-    }
-
-    if (error) {
-        return (
-            <Alert variant="destructive">
-                <AlertDescription>Erro ao carregar jogos zerados.</AlertDescription>
-            </Alert>
-        );
-    }
-
-    if (!data || data.length === 0) {
-        return (
-            <Alert>
-                <Trophy className="h-4 w-4" />
-                <AlertDescription>Nenhum jogo zerado cadastrado ainda.</AlertDescription>
-            </Alert>
-        );
-    }
+    const [editingGame, setEditingGame] = useState<FinishedGame | null>(null);
 
     const handleRemove = (id: string) => {
         setRemovingId(id);
@@ -63,60 +26,51 @@ export function FinishedGameList() {
         });
     };
 
-    return (
-        <div className="space-y-4">
-            <h2 className="text-2xl font-bold">Meus jogos zerados</h2>
+    if (games.length === 0) {
+        return (
+            <div className="flex flex-col items-center justify-center gap-3 rounded-lg border border-dashed py-16 text-center">
+                <Trophy className="h-12 w-12 text-muted-foreground/50" />
+                <h3 className="text-lg font-semibold">Nenhum jogo zerado ainda</h3>
+                <p className="max-w-sm text-sm text-muted-foreground">
+                    Cadastre seu primeiro jogo zerado para montar sua coleção de troféus.
+                </p>
+            </div>
+        );
+    }
 
-            {data.map((game) => (
-                <Card key={game.id} className="flex gap-4 p-4">
-                    {game.cover ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                            src={game.cover}
-                            alt={`Capa de ${game.title}`}
-                            className="h-28 w-20 shrink-0 rounded-md object-cover"
+    if (view === 'grid') {
+        return (
+            <>
+                <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                    {games.map((game) => (
+                        <FinishedGameCard
+                            key={game.id}
+                            game={game}
+                            isDeleting={isPending && removingId === game.id}
+                            onRemove={handleRemove}
+                            onEdit={setEditingGame}
                         />
-                    ) : (
-                        <div className="flex h-28 w-20 shrink-0 items-center justify-center rounded-md bg-muted">
-                            <Gamepad2 className="h-8 w-8 text-muted-foreground" />
-                        </div>
-                    )}
+                    ))}
+                </div>
+                <FinishedGameEditDialog game={editingGame} onClose={() => setEditingGame(null)} />
+            </>
+        );
+    }
 
-                    <div className="flex min-w-0 flex-1 flex-col">
-                        <h3 className="truncate font-semibold">{game.title}</h3>
-                        <p className="text-sm text-muted-foreground">{game.platform}</p>
-
-                        <div className="mt-auto flex flex-wrap items-center gap-4 pt-2 text-sm text-muted-foreground">
-                            <span className="flex items-center gap-1">
-                                <CalendarDays className="h-4 w-4" />
-                                {formatDate(game.finishedDate)}
-                            </span>
-                            {game.totalHours != null && (
-                                <span className="flex items-center gap-1">
-                                    <Clock className="h-4 w-4" />
-                                    {game.totalHours}h
-                                </span>
-                            )}
-                            {game.rating != null && (
-                                <span className="flex items-center gap-1">
-                                    <Star className="h-4 w-4" />
-                                    {game.rating}/10
-                                </span>
-                            )}
-                        </div>
-                    </div>
-
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        aria-label={`Remover ${game.title}`}
-                        disabled={isPending && removingId === game.id}
-                        onClick={() => handleRemove(game.id)}
-                    >
-                        <Trash2 className="h-4 w-4" />
-                    </Button>
-                </Card>
-            ))}
-        </div>
+    return (
+        <>
+            <div className="space-y-4">
+                {games.map((game) => (
+                    <FinishedGameListItem
+                        key={game.id}
+                        game={game}
+                        isDeleting={isPending && removingId === game.id}
+                        onRemove={handleRemove}
+                        onEdit={setEditingGame}
+                    />
+                ))}
+            </div>
+            <FinishedGameEditDialog game={editingGame} onClose={() => setEditingGame(null)} />
+        </>
     );
 }

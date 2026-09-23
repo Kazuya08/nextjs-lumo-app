@@ -25,6 +25,7 @@ model FinishedGame {
   coverUrl     String?
   platform     String
   finishedDate DateTime
+  finishedTime String?
   totalHours   Float?
   rating       Float?
   igdbId       Int?

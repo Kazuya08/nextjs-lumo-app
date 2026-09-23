@@ -27,6 +27,20 @@ export const finishedGamesApi = {
         return res.json();
     },
 
+    async update(id: string, input: CreateFinishedGameInput): Promise<FinishedGame> {
+        const res = await fetch(`${ENDPOINT}/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(input),
+        });
+
+        if (!res.ok) {
+            throw new Error('Erro ao atualizar jogo');
+        }
+
+        return res.json();
+    },
+
     async remove(id: string): Promise<void> {
         const res = await fetch(`${ENDPOINT}/${id}`, { method: 'DELETE' });
 

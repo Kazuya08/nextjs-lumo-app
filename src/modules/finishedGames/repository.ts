@@ -7,6 +7,7 @@ interface FinishedGameRecord {
     coverUrl: string | null;
     platform: string;
     finishedDate: Date;
+    finishedTime: string | null;
     totalHours: number | null;
     rating: number | null;
     createdAt: Date;
@@ -19,6 +20,7 @@ function toFinishedGame(record: FinishedGameRecord): FinishedGame {
         cover: record.coverUrl,
         platform: record.platform,
         finishedDate: record.finishedDate.toISOString().slice(0, 10),
+        finishedTime: record.finishedTime ?? undefined,
         totalHours: record.totalHours ?? undefined,
         rating: record.rating ?? undefined,
         createdAt: record.createdAt.toISOString(),
@@ -45,6 +47,7 @@ export async function createFinishedGame(
             coverUrl: input.cover ?? null,
             platform: input.platform,
             finishedDate: new Date(input.finishedDate),
+            finishedTime: input.finishedTime ?? null,
             totalHours: input.totalHours ?? null,
             rating: input.rating ?? null,
         },
@@ -59,4 +62,29 @@ export async function removeFinishedGame(userId: string, id: string): Promise<bo
     });
 
     return result.count > 0;
+}
+
+export async function updateFinishedGame(
+    userId: string,
+    id: string,
+    input: CreateFinishedGameInput
+): Promise<FinishedGame | null> {
+    try {
+        const game = await prisma.finishedGame.update({
+            where: { id, userId },
+            data: {
+                title: input.title,
+                coverUrl: input.cover ?? null,
+                platform: input.platform,
+                finishedDate: new Date(input.finishedDate),
+                finishedTime: input.finishedTime ?? null,
+                totalHours: input.totalHours ?? null,
+                rating: input.rating ?? null,
+            },
+        });
+
+        return toFinishedGame(game);
+    } catch {
+        return null;
+    }
 }
