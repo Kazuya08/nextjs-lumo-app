@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { registerSchema, type RegisterFormData } from '@/modules/auth';
-import { useAuth } from '@/contexts/AuthContext';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Eye, EyeOff, Loader2 } from 'lucide-react';
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { registerSchema, type RegisterFormData } from "@/modules/auth";
+import { useAuth } from "@/contexts/AuthContext";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 
 interface RegisterFormProps {
     onSuccess?: () => void;
@@ -61,7 +61,7 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
                             id="name"
                             type="text"
                             placeholder="Seu nome completo"
-                            {...register('name')}
+                            {...register("name")}
                             disabled={isSubmitting || isLoading}
                         />
                         {errors.name && (
@@ -75,7 +75,7 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
                             id="email"
                             type="email"
                             placeholder="seu@email.com"
-                            {...register('email')}
+                            {...register("email")}
                             disabled={isSubmitting || isLoading}
                         />
                         {errors.email && (
@@ -88,9 +88,9 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
                         <div className="relative">
                             <Input
                                 id="password"
-                                type={showPassword ? 'text' : 'password'}
+                                type={showPassword ? "text" : "password"}
                                 placeholder="Sua senha"
-                                {...register('password')}
+                                {...register("password")}
                                 disabled={isSubmitting || isLoading}
                             />
                             <Button
@@ -118,9 +118,9 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
                         <div className="relative">
                             <Input
                                 id="confirmPassword"
-                                type={showConfirmPassword ? 'text' : 'password'}
+                                type={showConfirmPassword ? "text" : "password"}
                                 placeholder="Confirme sua senha"
-                                {...register('confirmPassword')}
+                                {...register("confirmPassword")}
                                 disabled={isSubmitting || isLoading}
                             />
                             <Button
@@ -139,15 +139,13 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
                             </Button>
                         </div>
                         {errors.confirmPassword && (
-                            <p className="text-sm text-destructive">{errors.confirmPassword.message}</p>
+                            <p className="text-sm text-destructive">
+                                {errors.confirmPassword.message}
+                            </p>
                         )}
                     </div>
 
-                    <Button
-                        type="submit"
-                        className="w-full"
-                        disabled={isSubmitting || isLoading}
-                    >
+                    <Button type="submit" className="w-full" disabled={isSubmitting || isLoading}>
                         {(isSubmitting || isLoading) && (
                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                         )}
@@ -157,11 +155,8 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
 
                 <div className="mt-4 text-center text-sm">
                     <p className="text-muted-foreground">
-                        Já tem uma conta?{' '}
-                        <a
-                            href="/sign-in"
-                            className="text-primary hover:underline"
-                        >
+                        Já tem uma conta?{" "}
+                        <a href="/sign-in" className="text-primary hover:underline">
                             Fazer login
                         </a>
                     </p>

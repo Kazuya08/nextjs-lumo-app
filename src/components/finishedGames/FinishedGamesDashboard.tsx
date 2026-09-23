@@ -1,42 +1,42 @@
-'use client';
+"use client";
 
-import { useMemo, useState } from 'react';
-import { useFinishedGames } from '@/modules/finishedGames/useCases/useFinishedGames.useCase';
-import { FinishedGamesStats } from '@/components/finishedGames/FinishedGamesStats';
-import { FinishedGameList } from '@/components/finishedGames/FinishedGameList';
-import { FinishedGameForm } from '@/components/finishedGames/FinishedGameForm';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useMemo, useState } from "react";
+import { useFinishedGames } from "@/modules/finishedGames/useCases/useFinishedGames.useCase";
+import { FinishedGamesStats } from "@/components/finishedGames/FinishedGamesStats";
+import { FinishedGameList } from "@/components/finishedGames/FinishedGameList";
+import { FinishedGameForm } from "@/components/finishedGames/FinishedGameForm";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from '@/components/ui/select';
+} from "@/components/ui/select";
 import {
     Dialog,
     DialogContent,
     DialogDescription,
     DialogHeader,
     DialogTitle,
-} from '@/components/ui/dialog';
-import { LayoutGrid, List, Plus, Search } from 'lucide-react';
+} from "@/components/ui/dialog";
+import { LayoutGrid, List, Plus, Search } from "lucide-react";
 import {
     sortGames,
     type FinishedGameSort,
     type FinishedGameView,
-} from '@/components/finishedGames/utils';
+} from "@/components/finishedGames/utils";
 
 export function FinishedGamesDashboard() {
     const { data, isLoading, error } = useFinishedGames();
-    const [view, setView] = useState<FinishedGameView>('grid');
-    const [sort, setSort] = useState<FinishedGameSort>('recent');
-    const [search, setSearch] = useState('');
-    const [platform, setPlatform] = useState('all');
+    const [view, setView] = useState<FinishedGameView>("grid");
+    const [sort, setSort] = useState<FinishedGameSort>("recent");
+    const [search, setSearch] = useState("");
+    const [platform, setPlatform] = useState("all");
     const [formOpen, setFormOpen] = useState(false);
 
     const total = data?.length ?? 0;
@@ -44,12 +44,12 @@ export function FinishedGamesDashboard() {
     const platformOptions = useMemo(() => {
         if (!data) return [];
         return Array.from(new Set(data.map((game) => game.platform).filter(Boolean))).sort((a, b) =>
-            a.localeCompare(b, 'pt-BR')
+            a.localeCompare(b, "pt-BR")
         );
     }, [data]);
 
     const gamesByPlatform = useMemo(() => {
-        if (platform === 'all' || !data) return data ?? [];
+        if (platform === "all" || !data) return data ?? [];
         return data.filter((game) => game.platform === platform);
     }, [data, platform]);
 
@@ -68,8 +68,8 @@ export function FinishedGamesDashboard() {
                     <h1 className="text-3xl font-bold tracking-tight">Jogos Zerados</h1>
                     <p className="text-muted-foreground">
                         {total === 0
-                            ? 'Sua coleção de jogos concluídos'
-                            : `${total} ${total === 1 ? 'jogo concluído' : 'jogos concluídos'} na sua coleção`}
+                            ? "Sua coleção de jogos concluídos"
+                            : `${total} ${total === 1 ? "jogo concluído" : "jogos concluídos"} na sua coleção`}
                     </p>
                 </div>
                 <Button onClick={() => setFormOpen(true)}>
@@ -124,7 +124,10 @@ export function FinishedGamesDashboard() {
                             </SelectContent>
                         </Select>
 
-                        <Select value={sort} onValueChange={(value) => setSort(value as FinishedGameSort)}>
+                        <Select
+                            value={sort}
+                            onValueChange={(value) => setSort(value as FinishedGameSort)}
+                        >
                             <SelectTrigger className="sm:w-48">
                                 <SelectValue placeholder="Ordenar" />
                             </SelectTrigger>
@@ -138,20 +141,20 @@ export function FinishedGamesDashboard() {
 
                         <div className="flex items-center gap-1 rounded-md border p-1">
                             <Button
-                                variant={view === 'grid' ? 'secondary' : 'ghost'}
+                                variant={view === "grid" ? "secondary" : "ghost"}
                                 size="icon"
                                 className="h-8 w-8"
                                 aria-label="Visualização em grade"
-                                onClick={() => setView('grid')}
+                                onClick={() => setView("grid")}
                             >
                                 <LayoutGrid className="h-4 w-4" />
                             </Button>
                             <Button
-                                variant={view === 'list' ? 'secondary' : 'ghost'}
+                                variant={view === "list" ? "secondary" : "ghost"}
                                 size="icon"
                                 className="h-8 w-8"
                                 aria-label="Visualização em lista"
-                                onClick={() => setView('list')}
+                                onClick={() => setView("list")}
                             >
                                 <List className="h-4 w-4" />
                             </Button>
@@ -162,19 +165,8 @@ export function FinishedGamesDashboard() {
                         <Alert>
                             <AlertDescription>
                                 Nenhum jogo encontrado
-                                {search.trim() && (
-                                    <>
-                                        {' '}
-                                        para &quot;{search}&quot;
-                                    </>
-                                )}
-                                {platform !== 'all' && (
-                                    <>
-                                        {' '}
-                                        em &quot;{platform}&quot;
-                                    </>
-                                )}
-                                .
+                                {search.trim() && <> para &quot;{search}&quot;</>}
+                                {platform !== "all" && <> em &quot;{platform}&quot;</>}.
                             </AlertDescription>
                         </Alert>
                     ) : (

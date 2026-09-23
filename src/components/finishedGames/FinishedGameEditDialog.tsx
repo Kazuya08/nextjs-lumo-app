@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
     Dialog,
@@ -6,9 +6,9 @@ import {
     DialogDescription,
     DialogHeader,
     DialogTitle,
-} from '@/components/ui/dialog';
-import { FinishedGameForm } from '@/components/finishedGames/FinishedGameForm';
-import type { FinishedGame } from '@/modules/finishedGames/types';
+} from "@/components/ui/dialog";
+import { FinishedGameForm } from "@/components/finishedGames/FinishedGameForm";
+import type { FinishedGame } from "@/modules/finishedGames/types";
 
 interface FinishedGameEditDialogProps {
     game: FinishedGame | null;
@@ -26,9 +26,7 @@ export function FinishedGameEditDialog({ game, onClose }: FinishedGameEditDialog
             <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-lg">
                 <DialogHeader>
                     <DialogTitle>Editar jogo zerado</DialogTitle>
-                    <DialogDescription>
-                        Atualize as informações do jogo.
-                    </DialogDescription>
+                    <DialogDescription>Atualize as informações do jogo.</DialogDescription>
                 </DialogHeader>
                 {game && (
                     <FinishedGameForm

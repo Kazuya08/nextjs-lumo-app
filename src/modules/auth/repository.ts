@@ -1,6 +1,6 @@
-import { prisma } from '@/shared/prisma';
-import { hashPassword, verifyPassword } from './password';
-import type { User } from './types';
+import { prisma } from "@/shared/prisma";
+import { hashPassword, verifyPassword } from "./password";
+import type { User } from "./types";
 
 interface CreateUserInput {
     name: string;
@@ -20,7 +20,7 @@ export async function createUser({ name, email, password }: CreateUserInput): Pr
     const existing = await prisma.user.findUnique({ where: { email } });
 
     if (existing) {
-        throw new Error('Email já cadastrado');
+        throw new Error("Email já cadastrado");
     }
 
     const passwordHash = await hashPassword(password);
@@ -36,13 +36,13 @@ export async function authenticateUser(email: string, password: string): Promise
     const user = await prisma.user.findUnique({ where: { email } });
 
     if (!user) {
-        throw new Error('Credenciais inválidas');
+        throw new Error("Credenciais inválidas");
     }
 
     const isValid = await verifyPassword(password, user.passwordHash);
 
     if (!isValid) {
-        throw new Error('Credenciais inválidas');
+        throw new Error("Credenciais inválidas");
     }
 
     return toPublicUser(user);

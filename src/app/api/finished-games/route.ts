@@ -1,15 +1,15 @@
-import { NextResponse } from 'next/server';
-import { getSession } from '@/modules/auth/session';
-import { finishedGameSchema } from '@/modules/finishedGames/validations';
-import { createFinishedGame, listFinishedGamesByUser } from '@/modules/finishedGames/repository';
+import { NextResponse } from "next/server";
+import { getSession } from "@/modules/auth/session";
+import { finishedGameSchema } from "@/modules/finishedGames/validations";
+import { createFinishedGame, listFinishedGamesByUser } from "@/modules/finishedGames/repository";
 
-export const runtime = 'nodejs';
+export const runtime = "nodejs";
 
 export async function GET() {
     const session = await getSession();
 
     if (!session) {
-        return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
+        return NextResponse.json({ error: "Não autenticado" }, { status: 401 });
     }
 
     const games = await listFinishedGamesByUser(session.userId);
@@ -20,18 +20,17 @@ export async function POST(req: Request) {
     const session = await getSession();
 
     if (!session) {
-        return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
+        return NextResponse.json({ error: "Não autenticado" }, { status: 401 });
     }
 
     const body = (await req.json().catch(() => null)) as
-        | (Record<string, unknown> & { cover?: string | null })
-        | null;
+        (Record<string, unknown> & { cover?: string | null }) | null;
 
     const parsed = finishedGameSchema.safeParse(body);
 
     if (!parsed.success) {
         return NextResponse.json(
-            { error: 'Dados inválidos', issues: parsed.error.flatten() },
+            { error: "Dados inválidos", issues: parsed.error.flatten() },
             { status: 400 }
         );
     }

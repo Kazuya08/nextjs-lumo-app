@@ -1,13 +1,13 @@
-import type { CreateFinishedGameInput, FinishedGame } from './types';
+import type { CreateFinishedGameInput, FinishedGame } from "./types";
 
-const ENDPOINT = '/api/finished-games';
+const ENDPOINT = "/api/finished-games";
 
 export const finishedGamesApi = {
     async list(): Promise<FinishedGame[]> {
-        const res = await fetch(ENDPOINT, { cache: 'no-store' });
+        const res = await fetch(ENDPOINT, { cache: "no-store" });
 
         if (!res.ok) {
-            throw new Error('Erro ao carregar jogos');
+            throw new Error("Erro ao carregar jogos");
         }
 
         return res.json();
@@ -15,13 +15,13 @@ export const finishedGamesApi = {
 
     async create(input: CreateFinishedGameInput): Promise<FinishedGame> {
         const res = await fetch(ENDPOINT, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(input),
         });
 
         if (!res.ok) {
-            throw new Error('Erro ao salvar jogo');
+            throw new Error("Erro ao salvar jogo");
         }
 
         return res.json();
@@ -29,23 +29,23 @@ export const finishedGamesApi = {
 
     async update(id: string, input: CreateFinishedGameInput): Promise<FinishedGame> {
         const res = await fetch(`${ENDPOINT}/${id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(input),
         });
 
         if (!res.ok) {
-            throw new Error('Erro ao atualizar jogo');
+            throw new Error("Erro ao atualizar jogo");
         }
 
         return res.json();
     },
 
     async remove(id: string): Promise<void> {
-        const res = await fetch(`${ENDPOINT}/${id}`, { method: 'DELETE' });
+        const res = await fetch(`${ENDPOINT}/${id}`, { method: "DELETE" });
 
         if (!res.ok) {
-            throw new Error('Erro ao remover jogo');
+            throw new Error("Erro ao remover jogo");
         }
     },
 };

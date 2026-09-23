@@ -1,7 +1,7 @@
-import { PrismaClient } from '@prisma/client';
-import { hash } from 'bcryptjs';
-import { readFile } from 'fs/promises';
-import path from 'path';
+import { PrismaClient } from "@prisma/client";
+import { hash } from "bcryptjs";
+import { readFile } from "fs/promises";
+import path from "path";
 
 const prisma = new PrismaClient();
 
@@ -16,8 +16,8 @@ interface LegacyFinishedGame {
 async function readLegacyFinishedGames(): Promise<LegacyFinishedGame[]> {
     try {
         const raw = await readFile(
-            path.join(process.cwd(), 'data', 'finished-games.json'),
-            'utf-8'
+            path.join(process.cwd(), "data", "finished-games.json"),
+            "utf-8"
         );
         return JSON.parse(raw) as LegacyFinishedGame[];
     } catch {
@@ -26,24 +26,24 @@ async function readLegacyFinishedGames(): Promise<LegacyFinishedGame[]> {
 }
 
 async function main() {
-    const passwordHash = await hash('123456', 10);
+    const passwordHash = await hash("123456", 10);
 
     const admin = await prisma.user.upsert({
-        where: { email: 'admin@lumo.com' },
+        where: { email: "admin@lumo.com" },
         update: {},
         create: {
-            email: 'admin@lumo.com',
-            name: 'Admin Lumo',
+            email: "admin@lumo.com",
+            name: "Admin Lumo",
             passwordHash,
         },
     });
 
     await prisma.user.upsert({
-        where: { email: 'user@lumo.com' },
+        where: { email: "user@lumo.com" },
         update: {},
         create: {
-            email: 'user@lumo.com',
-            name: 'Usuário Teste',
+            email: "user@lumo.com",
+            name: "Usuário Teste",
             passwordHash,
         },
     });

@@ -1,4 +1,4 @@
-import GameList from '@/components/profile/gamelist';
+import GameList from "@/components/profile/gamelist";
 
 export default function GamesPage() {
     return (

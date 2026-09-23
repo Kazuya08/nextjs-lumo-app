@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRemoveFinishedGame } from '@/modules/finishedGames/useCases/useFinishedGames.useCase';
-import { FinishedGameCard } from '@/components/finishedGames/FinishedGameCard';
-import { FinishedGameListItem } from '@/components/finishedGames/FinishedGameListItem';
-import { FinishedGameEditDialog } from '@/components/finishedGames/FinishedGameEditDialog';
-import { Trophy } from 'lucide-react';
-import type { FinishedGame } from '@/modules/finishedGames/types';
-import type { FinishedGameView } from '@/components/finishedGames/utils';
+import { useState } from "react";
+import { useRemoveFinishedGame } from "@/modules/finishedGames/useCases/useFinishedGames.useCase";
+import { FinishedGameCard } from "@/components/finishedGames/FinishedGameCard";
+import { FinishedGameListItem } from "@/components/finishedGames/FinishedGameListItem";
+import { FinishedGameEditDialog } from "@/components/finishedGames/FinishedGameEditDialog";
+import { Trophy } from "lucide-react";
+import type { FinishedGame } from "@/modules/finishedGames/types";
+import type { FinishedGameView } from "@/components/finishedGames/utils";
 
 interface FinishedGameListProps {
     games: FinishedGame[];
@@ -38,7 +38,7 @@ export function FinishedGameList({ games, view }: FinishedGameListProps) {
         );
     }
 
-    if (view === 'grid') {
+    if (view === "grid") {
         return (
             <>
                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">

@@ -1,58 +1,49 @@
-'use client';
+"use client";
 
-import { useMemo, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import {
-    finishedGameSchema,
-    type FinishedGameFormData,
-} from '@/modules/finishedGames';
+import { useMemo, useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { finishedGameSchema, type FinishedGameFormData } from "@/modules/finishedGames";
 import {
     useCreateFinishedGame,
     useUpdateFinishedGame,
-} from '@/modules/finishedGames/useCases/useFinishedGames.useCase';
-import type { CatalogGame } from '@/modules/catalog/types';
-import type { FinishedGame } from '@/modules/finishedGames/types';
-import { GameSearchCombobox } from '@/components/finishedGames/GameSearchCombobox';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+} from "@/modules/finishedGames/useCases/useFinishedGames.useCase";
+import type { CatalogGame } from "@/modules/catalog/types";
+import type { FinishedGame } from "@/modules/finishedGames/types";
+import { GameSearchCombobox } from "@/components/finishedGames/GameSearchCombobox";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from '@/components/ui/select';
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Loader2 } from 'lucide-react';
+} from "@/components/ui/select";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Loader2 } from "lucide-react";
 
 const COMMON_PLATFORMS = [
-    'PC (Steam)',
-    'PC',
-    'PlayStation 5',
-    'PlayStation 4',
-    'Xbox Series X|S',
-    'Xbox One',
-    'Nintendo Switch',
-    '3DS',
-    'Mobile',
+    "PC (Steam)",
+    "PC",
+    "PlayStation 5",
+    "PlayStation 4",
+    "Xbox Series X|S",
+    "Xbox One",
+    "Nintendo Switch",
+    "3DS",
+    "Mobile",
 ];
 
 interface FinishedGameFormProps {
-    variant?: 'card' | 'sheet';
+    variant?: "card" | "sheet";
     game?: FinishedGame;
     onSuccess?: () => void;
 }
 
-export function FinishedGameForm({ variant = 'card', game, onSuccess }: FinishedGameFormProps) {
+export function FinishedGameForm({ variant = "card", game, onSuccess }: FinishedGameFormProps) {
     const isEditing = Boolean(game);
     const [selectedGame, setSelectedGame] = useState<CatalogGame | null>(null);
     const createMutation = useCreateFinishedGame();
@@ -80,16 +71,16 @@ export function FinishedGameForm({ variant = 'card', game, onSuccess }: Finished
                   rating: game.rating,
               }
             : {
-                  title: '',
-                  platform: '',
-                  finishedDate: '',
-                  finishedTime: '',
+                  title: "",
+                  platform: "",
+                  finishedDate: "",
+                  finishedTime: "",
                   totalHours: undefined,
                   rating: undefined,
               },
     });
 
-    const platform = watch('platform');
+    const platform = watch("platform");
 
     const platformOptions = useMemo(() => {
         const gamePlatforms = selectedGame?.platforms ?? [];
@@ -98,9 +89,9 @@ export function FinishedGameForm({ variant = 'card', game, onSuccess }: Finished
 
     const handleGameSelect = (catalogGame: CatalogGame) => {
         setSelectedGame(catalogGame);
-        setValue('title', catalogGame.title, { shouldValidate: true });
-        setValue('platform', catalogGame.platforms[0] ?? '', { shouldValidate: true });
-        setValue('totalHours', catalogGame.suggestedHours, { shouldValidate: true });
+        setValue("title", catalogGame.title, { shouldValidate: true });
+        setValue("platform", catalogGame.platforms[0] ?? "", { shouldValidate: true });
+        setValue("totalHours", catalogGame.suggestedHours, { shouldValidate: true });
     };
 
     const onSubmit = (data: FinishedGameFormData) => {
@@ -154,7 +145,7 @@ export function FinishedGameForm({ variant = 'card', game, onSuccess }: Finished
                         <div className="min-w-0">
                             <p className="truncate font-medium">{selectedGame.title}</p>
                             <p className="truncate text-sm text-muted-foreground">
-                                {selectedGame.platforms.join(', ')}
+                                {selectedGame.platforms.join(", ")}
                             </p>
                         </div>
                     </div>
@@ -166,19 +157,17 @@ export function FinishedGameForm({ variant = 'card', game, onSuccess }: Finished
                 <Input
                     id="title"
                     placeholder="Selecione um jogo na busca ou digite manualmente"
-                    {...register('title')}
+                    {...register("title")}
                     disabled={isPending}
                 />
-                {errors.title && (
-                    <p className="text-sm text-destructive">{errors.title.message}</p>
-                )}
+                {errors.title && <p className="text-sm text-destructive">{errors.title.message}</p>}
             </div>
 
             <div className="space-y-2">
                 <Label htmlFor="platform">Plataforma</Label>
                 <Select
                     value={platform || undefined}
-                    onValueChange={(value) => setValue('platform', value, { shouldValidate: true })}
+                    onValueChange={(value) => setValue("platform", value, { shouldValidate: true })}
                 >
                     <SelectTrigger id="platform">
                         <SelectValue placeholder="Selecione a plataforma" />
@@ -202,13 +191,11 @@ export function FinishedGameForm({ variant = 'card', game, onSuccess }: Finished
                     <Input
                         id="finishedDate"
                         type="date"
-                        {...register('finishedDate')}
+                        {...register("finishedDate")}
                         disabled={isPending}
                     />
                     {errors.finishedDate && (
-                        <p className="text-sm text-destructive">
-                            {errors.finishedDate.message}
-                        </p>
+                        <p className="text-sm text-destructive">{errors.finishedDate.message}</p>
                     )}
                 </div>
 
@@ -217,13 +204,11 @@ export function FinishedGameForm({ variant = 'card', game, onSuccess }: Finished
                     <Input
                         id="finishedTime"
                         type="time"
-                        {...register('finishedTime')}
+                        {...register("finishedTime")}
                         disabled={isPending}
                     />
                     {errors.finishedTime && (
-                        <p className="text-sm text-destructive">
-                            {errors.finishedTime.message}
-                        </p>
+                        <p className="text-sm text-destructive">{errors.finishedTime.message}</p>
                     )}
                 </div>
             </div>
@@ -237,13 +222,11 @@ export function FinishedGameForm({ variant = 'card', game, onSuccess }: Finished
                         min="0"
                         step="0.5"
                         placeholder="Ex.: 40"
-                        {...register('totalHours')}
+                        {...register("totalHours")}
                         disabled={isPending}
                     />
                     {errors.totalHours && (
-                        <p className="text-sm text-destructive">
-                            {errors.totalHours.message}
-                        </p>
+                        <p className="text-sm text-destructive">{errors.totalHours.message}</p>
                     )}
                 </div>
 
@@ -256,36 +239,34 @@ export function FinishedGameForm({ variant = 'card', game, onSuccess }: Finished
                         max="10"
                         step="0.1"
                         placeholder="1 a 10"
-                        {...register('rating')}
+                        {...register("rating")}
                         disabled={isPending}
                     />
                     {errors.rating && (
-                        <p className="text-sm text-destructive">
-                            {errors.rating.message}
-                        </p>
+                        <p className="text-sm text-destructive">{errors.rating.message}</p>
                     )}
                 </div>
             </div>
 
             <Button type="submit" className="w-full" disabled={isPending}>
                 {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {isEditing ? 'Salvar alterações' : 'Salvar'}
+                {isEditing ? "Salvar alterações" : "Salvar"}
             </Button>
         </form>
     );
 
-    if (variant === 'sheet') {
+    if (variant === "sheet") {
         return formFields;
     }
 
     return (
         <Card>
             <CardHeader>
-                <CardTitle>{isEditing ? 'Editar jogo zerado' : 'Cadastrar jogo zerado'}</CardTitle>
+                <CardTitle>{isEditing ? "Editar jogo zerado" : "Cadastrar jogo zerado"}</CardTitle>
                 <CardDescription>
                     {isEditing
-                        ? 'Atualize as informações do jogo zerado.'
-                        : 'Busque o jogo para preencher título, capa e plataforma'}
+                        ? "Atualize as informações do jogo zerado."
+                        : "Busque o jogo para preencher título, capa e plataforma"}
                 </CardDescription>
             </CardHeader>
             <CardContent>{formFields}</CardContent>

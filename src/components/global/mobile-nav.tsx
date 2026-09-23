@@ -1,21 +1,21 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Link from "next/link"
-import { Menu } from "lucide-react"
+import * as React from "react";
+import Link from "next/link";
+import { Menu } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 interface MobileNavProps {
     items?: {
-        title: string
-        href: string
-    }[]
+        title: string;
+        href: string;
+    }[];
 }
 
 export function MobileNav({ items }: MobileNavProps) {
-    const [open, setOpen] = React.useState(false)
+    const [open, setOpen] = React.useState(false);
 
     return (
         <Sheet open={open} onOpenChange={setOpen}>
@@ -43,6 +43,5 @@ export function MobileNav({ items }: MobileNavProps) {
                 </div>
             </SheetContent>
         </Sheet>
-    )
+    );
 }
-

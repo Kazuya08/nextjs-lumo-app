@@ -1,8 +1,8 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { finishedGamesApi } from '@/modules/finishedGames/api';
-import type { CreateFinishedGameInput } from '@/modules/finishedGames/types';
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { finishedGamesApi } from "@/modules/finishedGames/api";
+import type { CreateFinishedGameInput } from "@/modules/finishedGames/types";
 
-export const finishedGamesQueryKey = ['finished-games'];
+export const finishedGamesQueryKey = ["finished-games"];
 
 export function useFinishedGames() {
     return useQuery({

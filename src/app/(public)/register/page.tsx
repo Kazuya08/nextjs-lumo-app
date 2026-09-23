@@ -1,6 +1,6 @@
-import React from 'react'
-import { RegisterForm } from '@/components/auth/RegisterForm'
-import { PublicGuard } from '@/components/auth/AuthGuard'
+import React from "react";
+import { RegisterForm } from "@/components/auth/RegisterForm";
+import { PublicGuard } from "@/components/auth/AuthGuard";
 
 export default function RegisterPage() {
     return (
@@ -9,5 +9,5 @@ export default function RegisterPage() {
                 <RegisterForm />
             </div>
         </PublicGuard>
-    )
+    );
 }

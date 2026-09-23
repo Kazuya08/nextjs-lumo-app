@@ -1,1 +1,1 @@
-export { ramdomMovieSchema } from './schemas/ramdomMovie.schema';
+export { ramdomMovieSchema } from "./schemas/ramdomMovie.schema";

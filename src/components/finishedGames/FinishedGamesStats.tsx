@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { Card, CardContent } from '@/components/ui/card';
-import { Clock, Gamepad2, Star } from 'lucide-react';
-import type { FinishedGame } from '@/modules/finishedGames/types';
+import { Card, CardContent } from "@/components/ui/card";
+import { Clock, Gamepad2, Star } from "lucide-react";
+import type { FinishedGame } from "@/modules/finishedGames/types";
 
 function round(value: number): number {
     return Math.round(value * 10) / 10;
@@ -18,9 +18,9 @@ export function FinishedGamesStats({ games }: { games: FinishedGame[] }) {
             : null;
 
     const stats = [
-        { label: 'Jogos zerados', value: String(total), icon: Gamepad2 },
-        { label: 'Horas jogadas', value: total > 0 ? `${totalHours}h` : '—', icon: Clock },
-        { label: 'Nota média', value: average != null ? `${average}/10` : '—', icon: Star },
+        { label: "Jogos zerados", value: String(total), icon: Gamepad2 },
+        { label: "Horas jogadas", value: total > 0 ? `${totalHours}h` : "—", icon: Clock },
+        { label: "Nota média", value: average != null ? `${average}/10` : "—", icon: Star },
     ];
 
     return (
