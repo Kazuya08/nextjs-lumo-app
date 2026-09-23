@@ -85,7 +85,7 @@ export default function RamdomMovie() {
 
 
                 <div className='flex items-center flex-col space-y-5 my-10'>
-                    {selectedRandomMovie?.poster_path && <img src={urlImageApi + selectedRandomMovie?.poster_path} alt={selectedRandomMovie?.title} />}
+                    {selectedRandomMovie?.poster_path && <Image src={urlImageApi + selectedRandomMovie?.poster_path} alt={selectedRandomMovie?.title} width={300} height={450} />}
 
                     <div className="flex w-full flex-col space-y-5 justify-center overflow-hidden break-words text-center sm:text-left">
                         {selectedRandomMovie?.title && <p className="w-full max-w-[90vw] break-words">Título: {selectedRandomMovie.title}</p>}

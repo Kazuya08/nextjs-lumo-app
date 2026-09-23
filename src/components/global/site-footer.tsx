@@ -9,15 +9,6 @@ import { Moon, Sun, Laptop } from "lucide-react"
 export function SiteFooter() {
     const { setTheme } = useTheme()
 
-    const changePrimaryColor = (color: "blue") => {
-        const root = document.documentElement
-        if (color === "blue") {
-            root.style.setProperty("--primary", "217 91% 60%")
-            root.style.setProperty("--ring", "217 91% 60%")
-            localStorage.setItem("theme-color", "blue")
-        }
-    }
-
     return (
         <footer className="w-full border-t border-border bg-white dark:bg-black text-slate-900 dark:text-foreground mt-auto transition-colors duration-200">
             <div className="max-w-[1200px] mx-auto px-6 py-12 flex flex-col gap-8">

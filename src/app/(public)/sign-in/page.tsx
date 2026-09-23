@@ -6,6 +6,7 @@ import { LoginForm } from '@/components/auth/LoginForm'
 import { PublicGuard } from '@/components/auth/AuthGuard'
 import { AuthProvider } from '@/contexts/AuthContext'
 import { Sparkles, Compass, Trophy, Gamepad2, Sun, Moon, ArrowLeft } from "lucide-react"
+import Image from "next/image"
 
 export default function SignInPage() {
     const [isDarkMode, setIsDarkMode] = useState(true)
@@ -39,10 +40,12 @@ export default function SignInPage() {
                                 <div className="absolute inset-0 z-0">
                                     <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-zinc-950 via-zinc-950/80 to-transparent z-20" />
                                     <div className="absolute inset-0 bg-zinc-900/40 z-10" />
-                                    <img
+                                    <Image
                                         src="https://i.pinimg.com/736x/c7/63/64/c7636409decf56ab820fe24f3a5a62d8.jpg"
                                         alt="Universo dos Games"
-                                        className="w-full h-full object-cover object-center scale-105 transform hover:scale-100 transition-transform duration-1000"
+                                        fill
+                                        sizes="(min-width: 1024px) 50vw, 100vw"
+                                        className="object-cover object-center scale-105 transform hover:scale-100 transition-transform duration-1000"
                                     />
                                 </div>
 

@@ -43,7 +43,7 @@ export default function RootLayout({
                 document.documentElement.style.setProperty('--primary', '217 91% 60%');
                 document.documentElement.style.setProperty('--ring', '217 91% 60%');
             }
-        } catch (e) {}
+        } catch {}
     }, []);
 
     return (

@@ -1,4 +1,3 @@
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Sparkles, BookOpen, Layers, Zap, Compass, Users, ArrowRight } from "lucide-react"
 
