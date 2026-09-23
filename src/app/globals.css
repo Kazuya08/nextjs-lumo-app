@@ -4,7 +4,6 @@
 
 @layer base {
   :root {
-    /* Tema Claro: Fundo cinza claro, cards brancos, texto grafite e destaques em laranja */
     --background: 0 0% 98%;          /* Cinza claro suave */
     --foreground: 222 47% 11%;       /* Grafite forte (Texto principal) */
     
@@ -14,8 +13,8 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
 
-    /* Cor principal (Botões, XP, Destaques) -> Laranja */
-    --primary: 24 95% 53%;           /* Laranja vibrante */
+    /* Cor principal (Botões, XP, Destaques) -> Azul */
+    --primary: 217 91% 60%;          /* Azul vibrante */
     --primary-foreground: 0 0% 100%;
 
     --secondary: 210 40% 96.1%;
@@ -33,13 +32,12 @@
     /* Bordas suaves para o tema claro */
     --border: 214.3 31.8% 91.4%;     /* Cinza suave */
     --input: 214.3 31.8% 91.4%;
-    --ring: 24 95% 53%;
+    --ring: 217 91% 60%;
     --radius: 0.75rem;
   }
 
   .dark {
-    /* Tema Escuro: Fundo grafite, cards grafite médio, texto branco e destaques em laranja */
-    --background: 222 47% 7%;        /* Grafite escuro profundo (Fundo) */
+    --background: 0 0% 7%;        /* Grafite escuro profundo (Fundo) */
     --foreground: 210 40% 98%;       /* Branco (Texto principal) */
 
     --card: 222 47% 11%;             /* Grafite médio (Cards) */
@@ -48,8 +46,8 @@
     --popover: 222 47% 11%;
     --popover-foreground: 210 40% 98%;
 
-    /* Cor principal (Botões, XP, Destaques) -> Laranja mais escuro/vibrante */
-    --primary: 24 95% 53%;           /* Laranja vibrante */
+    /* Cor principal (Botões, XP, Destaques) -> Azul */
+    --primary: 217 91% 60%;          /* Azul vibrante */
     --primary-foreground: 0 0% 100%;
 
     --secondary: 217.2 32.6% 17.5%;
@@ -67,11 +65,11 @@
     /* Bordas em grafite claro para o tema escuro */
     --border: 217.2 32.6% 22%;       /* Grafite claro */
     --input: 217.2 32.6% 22%;
-    --ring: 24 95% 53%;
+    --ring: 217 91% 60%;
   }
 }
 
-@base {
+@layer base {
   * {
     @apply border-border;
   }

@@ -5,11 +5,9 @@ import { Sparkles, BookOpen, Layers, Zap, Compass, Users, ArrowRight } from "luc
 export default function LandingPage() {
     return (
         <div className="flex flex-col gap-20 py-8">
-            
-            {/* 🦸 1. HERO SECTION */}
+        
             <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 
-                {/* Coluna da Esquerda: Título, Perfil (no mobile) e Botões Centralizados */}
                 <div className="flex flex-col items-center lg:items-start text-center lg:text-left gap-6">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold w-fit">
                         <Sparkles className="w-3.5 h-3.5" />
@@ -25,9 +23,8 @@ export default function LandingPage() {
                         Registre os jogos que você já finalizou, conquiste XP e acompanhe sua evolução a cada nova aventura. Sua história já começou.
                     </p>
                     
-                    {/* Ilustração visível apenas no mobile (Card preto sólido sem transparência) */}
                     <div className="relative flex justify-center w-full lg:hidden my-4">
-                        <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-primary to-amber-600 opacity-20 blur-xl"></div>
+                        <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-primary to-blue-600 opacity-20 blur-xl"></div>
                         <div className="relative w-full max-w-md bg-card dark:bg-black border border-border rounded-2xl p-6 shadow-xl flex flex-col gap-6">
                             <div className="flex items-center justify-between border-b border-border pb-4">
                                 <div className="flex items-center gap-3">
@@ -67,7 +64,6 @@ export default function LandingPage() {
                         </div>
                     </div>
                     
-                    {/* Botões centralizados no mobile */}
                     <div className="flex flex-wrap justify-center lg:justify-start gap-4 pt-2 w-full">
                         <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold gap-2 shadow-lg shadow-primary/20">
                             🎮 Começar minha jornada
@@ -78,9 +74,8 @@ export default function LandingPage() {
                     </div>
                 </div>
 
-                {/* Coluna da Direita: Desktop (Card preto sólido sem transparência) */}
                 <div className="relative hidden lg:flex justify-center w-full">
-                    <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-primary to-amber-600 opacity-20 blur-xl"></div>
+                    <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-primary to-blue-600 opacity-20 blur-xl"></div>
                     <div className="relative w-full max-w-md bg-card dark:bg-black border border-border rounded-2xl p-6 shadow-xl flex flex-col gap-6">
                         <div className="flex items-center justify-between border-b border-border pb-4">
                             <div className="flex items-center gap-3">
@@ -122,7 +117,6 @@ export default function LandingPage() {
 
             </section>
 
-            {/* 🕹️ 2. SEGUNDA SEÇÃO — CARDS COM PRETO TRANSLÚCIDO NO DARK E BRANCO NO LIGHT */}
             <section className="border-t border-border/60 pt-20">
                 <div className="text-center max-w-2xl mx-auto mb-16 flex flex-col gap-3">
                     <span className="text-xs font-bold uppercase tracking-widest text-primary">Tradição Gamer</span>
@@ -165,7 +159,6 @@ export default function LandingPage() {
                 </div>
             </section>
 
-            {/* ⚔️ 3. TERCEIRA SEÇÃO — PROGRESSÃO */}
             <section className="bg-card/50 dark:bg-black/30 backdrop-blur-md border border-border/60 rounded-3xl p-8 sm:p-12">
                 <div className="max-w-3xl mx-auto text-center flex flex-col gap-4 mb-12">
                     <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground">CADA JOGO CONCLUÍDO É UM PASSO NA SUA JORNADA.</h2>
@@ -194,7 +187,6 @@ export default function LandingPage() {
                 </div>
             </section>
 
-            {/* 🌎 4. QUINTA SEÇÃO — EXPLORAÇÃO */}
             <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div className="flex flex-col gap-6">
                     <span className="text-xs font-bold uppercase tracking-widest text-primary">Exploração & Tesouros</span>
@@ -225,7 +217,6 @@ export default function LandingPage() {
                 </div>
             </section>
 
-            {/* 🚀 5. CTA FINAL */}
             <section className="bg-card dark:bg-black/50 backdrop-blur-md border border-primary/20 rounded-3xl p-8 sm:p-16 text-center flex flex-col items-center gap-6 shadow-lg">
                 <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight max-w-xl text-foreground">
                     PRONTO PARA REGISTRAR SUA PRÓXIMA AVENTURA?
