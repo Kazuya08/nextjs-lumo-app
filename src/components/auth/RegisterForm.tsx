@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -151,9 +151,9 @@ export function RegisterForm({ onSuccess, onSwitchToLogin }: RegisterFormProps) 
                             </div>
                             <Input
                                 id="password"
-                                type={showPassword ? 'text' : 'password'}
+                                type={showPassword ? "text" : "password"}
                                 placeholder="Sua senha"
-                                {...register('password')}
+                                {...register("password")}
                                 disabled={isSubmitting || isLoading}
                                 className="pl-8 pr-8 h-9 text-xs bg-background text-foreground border-border"
                             />

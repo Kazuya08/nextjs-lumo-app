@@ -46,7 +46,10 @@ export function GameList() {
             ) : (
                 <ul className="space-y-3">
                     {results.map((game) => (
-                        <li key={game.id} className="flex items-center gap-3 rounded-md border bg-card p-3">
+                        <li
+                            key={game.id}
+                            className="flex items-center gap-3 rounded-md border bg-card p-3"
+                        >
                             {game.cover ? (
                                 // eslint-disable-next-line @next/next/no-img-element
                                 <img
@@ -74,7 +77,9 @@ export function GameList() {
                                 )}
                                 {game.suggestedHoursCompletely != null && (
                                     <p className="text-sm text-muted-foreground">
-                                        {t("hoursComplete", { hours: game.suggestedHoursCompletely })}
+                                        {t("hoursComplete", {
+                                            hours: game.suggestedHoursCompletely,
+                                        })}
                                     </p>
                                 )}
                             </div>

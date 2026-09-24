@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { CalendarDays, Clock, Gamepad2, Pencil } from 'lucide-react';
-import { StarRating } from '@/components/finishedGames/StarRating';
-import { ConfirmDeleteButton } from '@/components/finishedGames/ConfirmDeleteButton';
-import { formatDate } from '@/components/finishedGames/utils';
-import type { FinishedGame } from '@/modules/finishedGames/types';
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { CalendarDays, Clock, Gamepad2, Pencil } from "lucide-react";
+import { StarRating } from "@/components/finishedGames/StarRating";
+import { ConfirmDeleteButton } from "@/components/finishedGames/ConfirmDeleteButton";
+import { formatDate } from "@/components/finishedGames/utils";
+import type { FinishedGame } from "@/modules/finishedGames/types";
 
 interface FinishedGameListItemProps {
     game: FinishedGame;
@@ -42,10 +42,7 @@ export function FinishedGameListItem({
                         <h3 className="truncate font-semibold" title={game.title}>
                             {game.title}
                         </h3>
-                        <p
-                            className="truncate text-sm text-muted-foreground"
-                            title={game.platform}
-                        >
+                        <p className="truncate text-sm text-muted-foreground" title={game.platform}>
                             {game.platform}
                         </p>
                     </div>
@@ -77,10 +74,7 @@ export function FinishedGameListItem({
                 >
                     <Pencil className="h-4 w-4" />
                 </Button>
-                <ConfirmDeleteButton
-                    isDeleting={isDeleting}
-                    onConfirm={() => onRemove(game.id)}
-                />
+                <ConfirmDeleteButton isDeleting={isDeleting} onConfirm={() => onRemove(game.id)} />
             </div>
         </Card>
     );

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState, useEffect } from "react"
 import Link from "next/link"
@@ -26,14 +26,14 @@ export default function AuthPage() {
     }, [])
 
     const toggleTheme = () => {
-        const newMode = !isDarkMode
-        setIsDarkMode(newMode)
+        const newMode = !isDarkMode;
+        setIsDarkMode(newMode);
         if (newMode) {
-            document.documentElement.classList.add("dark")
+            document.documentElement.classList.add("dark");
         } else {
-            document.documentElement.classList.remove("dark")
+            document.documentElement.classList.remove("dark");
         }
-    }
+    };
 
     return (
         <AuthProvider>
@@ -139,13 +139,11 @@ export default function AuthPage() {
                                 <div className="hidden lg:block text-center text-[11px] text-muted-foreground shrink-0 h-4 mt-2">
                                     © 2026 Project Lumo. Todos os direitos reservados.
                                 </div>
-
                             </div>
-
                         </div>
                     </div>
                 </div>
             </PublicGuard>
         </AuthProvider>
-    )
+    );
 }

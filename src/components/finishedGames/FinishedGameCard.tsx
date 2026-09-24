@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { Card } from '@/components/ui/card';
-import { CalendarDays, Clock, Gamepad2 } from 'lucide-react';
-import { StarRating } from '@/components/finishedGames/StarRating';
-import { GameCardMenu } from '@/components/finishedGames/GameCardMenu';
-import { formatDate } from '@/components/finishedGames/utils';
-import type { FinishedGame } from '@/modules/finishedGames/types';
+import { Card } from "@/components/ui/card";
+import { CalendarDays, Clock, Gamepad2 } from "lucide-react";
+import { StarRating } from "@/components/finishedGames/StarRating";
+import { GameCardMenu } from "@/components/finishedGames/GameCardMenu";
+import { formatDate } from "@/components/finishedGames/utils";
+import type { FinishedGame } from "@/modules/finishedGames/types";
 
 interface FinishedGameCardProps {
     game: FinishedGame;

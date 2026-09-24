@@ -1,5 +1,5 @@
-import { prisma } from '@/shared/prisma';
-import type { CreateFinishedGameInput, FinishedGame } from './types';
+import { prisma } from "@/shared/prisma";
+import type { CreateFinishedGameInput, FinishedGame } from "./types";
 
 interface FinishedGameRecord {
     id: string;
@@ -30,7 +30,7 @@ function toFinishedGame(record: FinishedGameRecord): FinishedGame {
 export async function listFinishedGamesByUser(userId: string): Promise<FinishedGame[]> {
     const games = await prisma.finishedGame.findMany({
         where: { userId },
-        orderBy: { finishedDate: 'desc' },
+        orderBy: { finishedDate: "desc" },
     });
 
     return games.map(toFinishedGame);

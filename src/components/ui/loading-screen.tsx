@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { Spinner } from "@/components/ui/spinner"
+import { Spinner } from "@/components/ui/spinner";
 
 interface LoadingScreenProps {
-    message?: string
+    message?: string;
 }
 
 export function LoadingScreen({ message = "Carregando..." }: LoadingScreenProps) {
@@ -12,6 +12,5 @@ export function LoadingScreen({ message = "Carregando..." }: LoadingScreenProps)
             <Spinner size="lg" variant="primary" className="mb-4" />
             <p className="text-lg font-medium text-muted-foreground">{message}</p>
         </div>
-    )
+    );
 }
-

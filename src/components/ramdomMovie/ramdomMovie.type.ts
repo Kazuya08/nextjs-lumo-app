@@ -58,10 +58,9 @@ export interface IGenre {
 }
 
 export interface IUseRamdomMovieReturn {
-    methods: UseFormReturn<IRamdomMovie>
+    methods: UseFormReturn<IRamdomMovie>;
     loadingSearch: boolean;
     selectedRandomMovie?: IMovie;
     optionsGenres: IGenre[];
-    handleSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>
-
+    handleSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
 }

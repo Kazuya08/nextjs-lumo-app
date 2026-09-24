@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Check, Loader2, Trash2, X } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Check, Loader2, Trash2, X } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface ConfirmDeleteButtonProps {
     isDeleting: boolean;
@@ -25,7 +25,7 @@ export function ConfirmDeleteButton({
                 size="icon"
                 aria-label="Remover jogo"
                 className={cn(
-                    'h-8 w-8 text-destructive hover:bg-destructive/10 hover:text-destructive',
+                    "h-8 w-8 text-destructive hover:bg-destructive/10 hover:text-destructive",
                     className
                 )}
                 disabled={isDeleting}
@@ -55,7 +55,7 @@ export function ConfirmDeleteButton({
             <Button
                 variant="ghost"
                 size="icon"
-                className={cn('h-8 w-8', className)}
+                className={cn("h-8 w-8", className)}
                 aria-label="Cancelar exclusão"
                 disabled={isDeleting}
                 onClick={() => setConfirming(false)}

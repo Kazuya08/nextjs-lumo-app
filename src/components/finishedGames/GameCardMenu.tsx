@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Button } from '@/components/ui/button';
-import { Loader2, MoreVertical, Pencil, Trash2 } from 'lucide-react';
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { Loader2, MoreVertical, Pencil, Trash2 } from "lucide-react";
 
 interface GameCardMenuProps {
     title: string;

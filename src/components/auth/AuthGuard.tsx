@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { Loader2 } from 'lucide-react';
+import React from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import { Loader2 } from "lucide-react";
 
 interface AuthGuardProps {
     children: React.ReactNode;

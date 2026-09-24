@@ -31,26 +31,26 @@ export default function RootLayout({
     const [queryClient] = useState(() => new QueryClient());
     const pathname = usePathname();
 
-    {/* HIDE FOOTER AND HEADER */}
+    {
+        /* HIDE FOOTER AND HEADER */
+    }
     const hideHeaderFooterRoutes = ["sign-in", "register", "forgot-password", "checkout"];
-    
-    const isSpecialPage = hideHeaderFooterRoutes.some(route => pathname?.includes(route));
+
+    const isSpecialPage = hideHeaderFooterRoutes.some((route) => pathname?.includes(route));
 
     useEffect(() => {
         try {
-            const savedColor = localStorage.getItem('theme-color');
-            if (savedColor === 'blue') {
-                document.documentElement.style.setProperty('--primary', '217 91% 60%');
-                document.documentElement.style.setProperty('--ring', '217 91% 60%');
+            const savedColor = localStorage.getItem("theme-color");
+            if (savedColor === "blue") {
+                document.documentElement.style.setProperty("--primary", "217 91% 60%");
+                document.documentElement.style.setProperty("--ring", "217 91% 60%");
             }
-        } catch (e) {}
+        } catch {}
     }, []);
 
     return (
         <html lang="pt-BR" suppressHydrationWarning>
-            <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-            >
+            <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
                 <ThemeProvider
                     attribute="class"
                     defaultTheme="system"
@@ -63,11 +63,13 @@ export default function RootLayout({
                                 <div className="relative flex min-h-screen flex-col overflow-hidden">
                                     {!isSpecialPage && <SiteHeader />}
 
-                                    <main className={
-                                        isSpecialPage 
-                                            ? "flex-1 w-full h-full flex flex-col justify-center items-center overflow-hidden" 
-                                            : "flex-1 w-full max-w-[1200px] mx-auto px-6 py-8"
-                                    }>
+                                    <main
+                                        className={
+                                            isSpecialPage
+                                                ? "flex-1 w-full h-full flex flex-col justify-center items-center overflow-hidden"
+                                                : "flex-1 w-full max-w-[1200px] mx-auto px-6 py-8"
+                                        }
+                                    >
                                         {children}
                                     </main>
 

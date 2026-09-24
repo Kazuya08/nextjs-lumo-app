@@ -1,17 +1,17 @@
-import Link from "next/link"
+import Link from "next/link";
 
 interface NavItem {
-    title: string
-    href: string
+    title: string;
+    href: string;
 }
 
 interface MainNavProps {
-    items?: NavItem[]
+    items?: NavItem[];
 }
 
 export function MainNav({ items }: MainNavProps) {
     if (!items?.length) {
-        return null
+        return null;
     }
 
     return (
@@ -26,5 +26,5 @@ export function MainNav({ items }: MainNavProps) {
                 </Link>
             ))}
         </nav>
-    )
+    );
 }
