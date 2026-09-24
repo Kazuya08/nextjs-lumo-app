@@ -15,9 +15,10 @@ import { Eye, EyeOff, Loader2, Mail, Lock, ArrowRight } from "lucide-react";
 
 interface LoginFormProps {
     onSuccess?: () => void;
+    onSwitchToRegister?: () => void;
 }
 
-export function LoginForm({ onSuccess }: LoginFormProps) {
+export function LoginForm({ onSuccess, onSwitchToRegister }: LoginFormProps) {
     const router = useRouter();
     const [showPassword, setShowPassword] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
@@ -46,15 +47,15 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
     };
 
     return (
-        <div className="w-full max-w-md mx-auto my-auto py-6">
-            <div className="mb-8">
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground mb-2">
+        <div className="w-full max-w-md mx-auto my-auto py-2 sm:py-4">
+            <div className="mb-6">
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground mb-1.5">
                     Bem-vindo!
                 </h2>
                 <p className="text-sm text-muted-foreground">Comece sua jornada gamer.</p>
             </div>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-3.5">
                 {error && (
                     <Alert variant="destructive" className="py-2">
                         <AlertDescription className="text-xs">{error}</AlertDescription>
@@ -79,7 +80,7 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
                             placeholder="seu@email.com"
                             {...register("email")}
                             disabled={isSubmitting || isLoading}
-                            className="pl-10 h-11 text-sm bg-background text-foreground border-border focus-visible:ring-primary transition-all"
+                            className="pl-10 h-10 sm:h-11 text-xs sm:text-sm bg-background text-foreground border-border focus-visible:ring-primary transition-all"
                         />
                     </div>
                     {errors.email && (
@@ -104,7 +105,7 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
                             placeholder="Sua senha"
                             {...register("password")}
                             disabled={isSubmitting || isLoading}
-                            className="pl-10 pr-10 h-11 text-sm bg-background text-foreground border-border focus-visible:ring-primary transition-all"
+                            className="pl-10 pr-10 h-10 sm:h-11 text-xs sm:text-sm bg-background text-foreground border-border focus-visible:ring-primary transition-all"
                         />
                         <button
                             type="button"
@@ -124,15 +125,15 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
                     )}
                 </div>
 
-                {/* Opções Adicionais: Lembrar de mim & Esqueceu a senha */}
-                <div className="flex items-center justify-between text-xs py-1">
+                {/* Opções Adicionais */}
+                <div className="flex items-center justify-between text-xs py-0.5">
                     <div className="flex items-center space-x-2">
                         <input
                             type="checkbox"
                             id="remember"
                             checked={rememberMe}
                             onChange={(e) => setRememberMe(e.target.checked)}
-                            className="h-4 w-4 rounded border-border text-primary focus:ring-primary bg-background accent-primary cursor-pointer"
+                            className="h-3.5 w-3.5 rounded border-border text-primary focus:ring-primary bg-background accent-primary cursor-pointer"
                         />
                         <label
                             htmlFor="remember"
@@ -151,7 +152,7 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
 
                 <Button
                     type="submit"
-                    className="w-full h-11 bg-primary hover:bg-primary/95 text-primary-foreground font-medium text-sm transition-all shadow-lg shadow-primary/20 group flex items-center justify-center gap-2 mt-2"
+                    className="w-full h-10 sm:h-11 bg-primary hover:bg-primary/95 text-primary-foreground font-medium text-xs sm:text-sm transition-all shadow-lg shadow-primary/20 group flex items-center justify-center gap-2 mt-1"
                     disabled={isSubmitting || isLoading}
                 >
                     {isSubmitting || isLoading ? (
@@ -169,11 +170,11 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
             </form>
 
             {/* Divisor "ou" */}
-            <div className="relative my-6">
+            <div className="relative my-4 sm:my-5">
                 <div className="absolute inset-0 flex items-center">
                     <div className="w-full border-t border-border" />
                 </div>
-                <div className="relative flex justify-center text-xs uppercase">
+                <div className="relative flex justify-center text-[10px] uppercase">
                     <span className="bg-card px-2 text-muted-foreground tracking-wider">ou</span>
                 </div>
             </div>
@@ -204,9 +205,9 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
                 <span>Continuar com Google</span>
             </Button>
 
-            {/* Cadastro de Novo Usuário */}
-            <div className="mt-8 text-center pt-6 border-t border-border">
-                <p className="text-xs text-muted-foreground mb-3">
+            {/* Alternar para Cadastro */}
+            <div className="mt-5 text-center pt-4 border-t border-border">
+                <p className="text-xs text-muted-foreground mb-2.5">
                     Ainda não faz parte da jornada?
                 </p>
                 <Button
@@ -214,7 +215,7 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
                     variant="secondary"
                     className="w-full h-10 text-xs font-semibold bg-muted/80 hover:bg-muted text-foreground transition-colors"
                 >
-                    <Link href="/sign-up">Criar minha conta</Link>
+                    Criar minha conta
                 </Button>
             </div>
         </div>
