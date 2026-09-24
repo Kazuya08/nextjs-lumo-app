@@ -37,36 +37,34 @@
   }
 
   .dark {
-    --background: 0 0% 7%;        /* Grafite escuro profundo (Fundo) */
-    --foreground: 210 40% 98%;       /* Branco (Texto principal) */
+  --background: 0 0% 7%;
+  --foreground: 210 40% 98%;
 
-    --card: 222 47% 11%;             /* Grafite médio (Cards) */
-    --card-foreground: 210 40% 98%;
+  --card: 0 0% 10%;
+  --card-foreground: 210 40% 98%;
 
-    --popover: 222 47% 11%;
-    --popover-foreground: 210 40% 98%;
+  --popover: 0 0% 12%;
+  --popover-foreground: 210 40% 98%;
 
-    /* Cor principal (Botões, XP, Destaques) -> Azul */
-    --primary: 217 91% 60%;          /* Azul vibrante */
-    --primary-foreground: 0 0% 100%;
+  --primary: 217 91% 60%;
+  --primary-foreground: 0 0% 100%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+  --secondary: 0 0% 15%;
+  --secondary-foreground: 210 40% 98%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+  --muted: 0 0% 15%;
+  --muted-foreground: 215 16% 65%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+  --accent: 0 0% 17%;
+  --accent-foreground: 210 40% 98%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+  --destructive: 0 63% 31%;
+  --destructive-foreground: 210 40% 98%;
 
-    /* Bordas em grafite claro para o tema escuro */
-    --border: 217.2 32.6% 22%;       /* Grafite claro */
-    --input: 217.2 32.6% 22%;
-    --ring: 217 91% 60%;
-  }
+  --border: 0 0% 20%;
+  --input: 0 0% 20%;
+  --ring: 217 91% 60%;
+}
 }
 
 @layer base {
