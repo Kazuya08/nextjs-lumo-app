@@ -14,6 +14,14 @@ const nextConfig: NextConfig = {
                 protocol: "https",
                 hostname: "image.tmdb.org",
             },
+            {
+                protocol: "https",
+                hostname: "images.igdb.com",
+            },
+            {
+                protocol: "https",
+                hostname: "encrypted-tbn0.gstatic.com",
+            },
         ],
     },
 };

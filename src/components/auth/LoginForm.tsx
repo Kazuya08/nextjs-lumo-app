@@ -211,9 +211,10 @@ export function LoginForm({ onSuccess, onSwitchToRegister }: LoginFormProps) {
                     Ainda não faz parte da jornada?
                 </p>
                 <Button
-                    asChild
+                    type="button"
                     variant="secondary"
                     className="w-full h-10 text-xs font-semibold bg-muted/80 hover:bg-muted text-foreground transition-colors"
+                    onClick={onSwitchToRegister}
                 >
                     Criar minha conta
                 </Button>
