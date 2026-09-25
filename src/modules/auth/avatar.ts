@@ -49,7 +49,7 @@ export async function clearAvatar(userId: string): Promise<User> {
     return user;
 }
 
-function isBlobUrl(url: string): boolean {
+export function isBlobUrl(url: string): boolean {
     return url.includes(".public.blob.vercel-storage.com");
 }
 

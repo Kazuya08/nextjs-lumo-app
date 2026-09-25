@@ -1,7 +1,14 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { AuthState, LoginCredentials, RegisterCredentials, User, authApi } from "@/modules/auth";
+import {
+    AuthState,
+    LoginCredentials,
+    RegisterCredentials,
+    UpdateProfileInput,
+    User,
+    authApi,
+} from "@/modules/auth";
 
 interface AuthContextType extends AuthState {
     login: (credentials: LoginCredentials) => Promise<void>;
@@ -9,6 +16,7 @@ interface AuthContextType extends AuthState {
     logout: () => Promise<void>;
     updateAvatar: (file: File) => Promise<User>;
     removeAvatar: () => Promise<void>;
+    updateProfile: (input: UpdateProfileInput) => Promise<User>;
     error: string | null;
     clearError: () => void;
 }
@@ -81,6 +89,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setState((prev) => (prev.user ? { ...prev, user } : prev));
     };
 
+    const updateProfile = async (input: UpdateProfileInput): Promise<User> => {
+        setError(null);
+
+        const { user } = await authApi.updateProfile(input);
+
+        setState((prev) => (prev.user ? { ...prev, user } : prev));
+
+        return user;
+    };
+
     const logout = async () => {
         try {
             setState((prev) => ({ ...prev, isLoading: true }));
@@ -138,6 +156,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 logout,
                 updateAvatar,
                 removeAvatar,
+                updateProfile,
                 error,
                 clearError,
             }}

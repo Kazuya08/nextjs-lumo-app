@@ -33,3 +33,26 @@ export const registerSchema = z
 
 export type LoginFormData = z.infer<typeof loginSchema>;
 export type RegisterFormData = z.infer<typeof registerSchema>;
+
+export const socialsSchema = z.object({
+    youtube: z.string().optional().default(""),
+    discord: z.string().optional().default(""),
+    twitch: z.string().optional().default(""),
+    instagram: z.string().optional().default(""),
+    twitter: z.string().optional().default(""),
+    steam: z.string().optional().default(""),
+});
+
+export const updateProfileSchema = z.object({
+    displayName: z
+        .string()
+        .trim()
+        .min(1, "Nome de exibição é obrigatório")
+        .min(2, "Nome de exibição deve ter pelo menos 2 caracteres")
+        .optional(),
+    country: z.string().trim().min(1, "País é obrigatório").optional(),
+    socials: socialsSchema.optional(),
+    avatarUrl: z.string().url("URL de avatar inválida").nullable().optional(),
+});
+
+export type UpdateProfileFormData = z.infer<typeof updateProfileSchema>;

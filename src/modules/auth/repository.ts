@@ -1,6 +1,7 @@
 import { prisma } from "@/shared/prisma";
 import { hashPassword, verifyPassword } from "./password";
-import type { User } from "./types";
+import type { UpdateProfileInput, User } from "./types";
+import type { Prisma } from "@prisma/client";
 
 interface CreateUserInput {
     name: string;
@@ -13,12 +14,23 @@ function toPublicUser(user: {
     email: string;
     name: string;
     avatarUrl: string | null;
+    displayName: string | null;
+    country: string | null;
+    socials: Prisma.JsonValue | null;
 }): User {
+    const socials =
+        user.socials && typeof user.socials === "object"
+            ? (user.socials as Record<string, string>)
+            : null;
+
     return {
         id: user.id,
         email: user.email,
         name: user.name,
         avatarUrl: user.avatarUrl,
+        displayName: user.displayName,
+        country: user.country,
+        socials,
     };
 }
 
@@ -63,6 +75,19 @@ export async function updateUserAvatar(id: string, avatarUrl: string | null): Pr
     const user = await prisma.user.update({
         where: { id },
         data: { avatarUrl },
+    });
+    return toPublicUser(user);
+}
+
+export async function updateUserProfile(id: string, input: UpdateProfileInput): Promise<User> {
+    const user = await prisma.user.update({
+        where: { id },
+        data: {
+            ...(input.displayName !== undefined ? { displayName: input.displayName } : {}),
+            ...(input.country !== undefined ? { country: input.country } : {}),
+            ...(input.socials !== undefined ? { socials: input.socials } : {}),
+            ...(input.avatarUrl !== undefined ? { avatarUrl: input.avatarUrl } : {}),
+        },
     });
     return toPublicUser(user);
 }

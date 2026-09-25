@@ -14,6 +14,9 @@ model User {
   name          String
   passwordHash  String
   avatarUrl     String?
+  displayName   String?
+  country       String?
+  socials       Json?
   createdAt     DateTime       @default(now())
   finishedGames FinishedGame[]
 }

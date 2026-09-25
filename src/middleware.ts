@@ -4,7 +4,6 @@ import { verifySessionToken } from "./modules/auth/token";
 
 const publicRoutes = [
     { path: "/sign-in", whenauthenticated: "redirect" },
-    { path: "/register", whenauthenticated: "redirect" },
     { path: "/", whenauthenticated: "next" },
     { path: "/random-movie", whenauthenticated: "next" },
 ] as const;

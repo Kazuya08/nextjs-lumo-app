@@ -2,6 +2,8 @@
 
 import React, { useState, useRef } from "react";
 import Image from "next/image";
+import { useAuth } from "@/contexts/AuthContext";
+import { compressAvatar, dataUrlToFile } from "@/modules/auth/avatar.client";
 import {
     Compass,
     Trophy,
@@ -21,6 +23,7 @@ import {
     Disc as Discord,
     Shield,
     Check,
+    Loader2,
 } from "lucide-react";
 
 const COUNTRIES = [
@@ -44,6 +47,8 @@ const DEFAULT_AVATARS = [
 ];
 
 export default function OnboardingFlow() {
+    const { updateAvatar, updateProfile } = useAuth();
+
     const [step, setStep] = useState(1); // 1: Identidade, 2: Estilo, 3: Primeiro Level, 4: Resumo Final
 
     // Estado do Onboarding
@@ -67,6 +72,8 @@ export default function OnboardingFlow() {
         displayName?: string | null;
     }>({});
     const [showAvatarSelector, setShowAvatarSelector] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
+    const [saveError, setSaveError] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     // Manipulador de upload de avatar
@@ -90,12 +97,49 @@ export default function OnboardingFlow() {
         document.documentElement.classList.toggle("dark");
     };
 
-    const nextStep = () => {
+    const nextStep = async () => {
         if (step === 1 && !formData.displayName.trim()) {
             setErrors({ ...errors, displayName: "Por favor, insira seu nome de exibição." });
             return;
         }
+
+        if (step === 1) {
+            const saved = await saveStep1();
+            if (!saved) return;
+        }
+
         setStep((prev) => Math.min(prev + 1, 4));
+    };
+
+    const saveStep1 = async (): Promise<boolean> => {
+        setIsSaving(true);
+        setSaveError(null);
+
+        try {
+            const { avatar, displayName, country, socials } = formData;
+            let avatarUrl: string | undefined;
+
+            if (avatar) {
+                if (avatar.startsWith("data:")) {
+                    const file = await dataUrlToFile(avatar);
+                    const compressed = await compressAvatar(file);
+                    await updateAvatar(compressed);
+                } else if (!avatar.includes(".public.blob.vercel-storage.com")) {
+                    avatarUrl = avatar;
+                }
+            }
+
+            await updateProfile({ displayName, country, socials, avatarUrl });
+
+            return true;
+        } catch (err) {
+            setSaveError(
+                err instanceof Error ? err.message : "Não foi possível salvar seus dados."
+            );
+            return false;
+        } finally {
+            setIsSaving(false);
+        }
     };
 
     const prevStep = () => {
@@ -805,12 +849,26 @@ export default function OnboardingFlow() {
                     )}
 
                     {step < 4 ? (
-                        <button
-                            onClick={nextStep}
-                            className="px-6 py-2.5 rounded-xl bg-primary hover:bg-primary text-foreground text-xs font-semibold tracking-wide transition-all flex items-center gap-2 shadow-lg shadow-border-primary/20 cursor-pointer ml-auto"
-                        >
-                            Continuar <ArrowRight className="w-4 h-4" />
-                        </button>
+                        <>
+                            {saveError && (
+                                <p className="text-xs text-red-400 px-2 py-1">{saveError}</p>
+                            )}
+                            <button
+                                onClick={nextStep}
+                                disabled={isSaving}
+                                className="px-6 py-2.5 rounded-xl bg-primary hover:bg-primary text-foreground text-xs font-semibold tracking-wide transition-all flex items-center gap-2 shadow-lg shadow-border-primary/20 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed ml-auto"
+                            >
+                                {isSaving ? (
+                                    <>
+                                        <Loader2 className="w-4 h-4 animate-spin" /> Salvando...
+                                    </>
+                                ) : (
+                                    <>
+                                        Continuar <ArrowRight className="w-4 h-4" />
+                                    </>
+                                )}
+                            </button>
+                        </>
                     ) : (
                         <button
                             onClick={() => alert("Parabéns! Sua jornada foi iniciada com sucesso.")}

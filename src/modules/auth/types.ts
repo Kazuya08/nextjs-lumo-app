@@ -3,6 +3,16 @@ export interface User {
     email: string;
     name: string;
     avatarUrl: string | null;
+    displayName: string | null;
+    country: string | null;
+    socials: Record<string, string> | null;
+}
+
+export interface UpdateProfileInput {
+    displayName?: string;
+    country?: string;
+    socials?: Record<string, string>;
+    avatarUrl?: string | null;
 }
 
 export interface AuthState {

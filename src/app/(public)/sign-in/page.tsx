@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { default as NextImage } from "next/image";
 import { LoginForm } from "@/components/auth/LoginForm";
 import { RegisterForm } from "@/components/auth/RegisterForm";
@@ -10,6 +11,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { Sparkles, Compass, Trophy, Gamepad2, Sun, Moon, ArrowLeft } from "lucide-react";
 
 export default function AuthPage() {
+    const router = useRouter();
     const [isDarkMode, setIsDarkMode] = useState(true);
     const [isRegister, setIsRegister] = useState(false);
 
@@ -169,6 +171,7 @@ export default function AuthPage() {
                                     {isRegister ? (
                                         <RegisterForm
                                             onSwitchToLogin={() => setIsRegister(false)}
+                                            onSuccess={() => router.push("/register")}
                                         />
                                     ) : (
                                         <LoginForm onSwitchToRegister={() => setIsRegister(true)} />

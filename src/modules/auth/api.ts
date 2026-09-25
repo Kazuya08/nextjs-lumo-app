@@ -1,4 +1,4 @@
-import type { LoginCredentials, RegisterCredentials, User } from "./types";
+import type { LoginCredentials, RegisterCredentials, UpdateProfileInput, User } from "./types";
 
 interface ApiError {
     error?: string;
@@ -70,6 +70,13 @@ export const authApi = {
     async removeAvatar(): Promise<{ user: User }> {
         return request("/api/user/avatar", {
             method: "DELETE",
+        });
+    },
+
+    async updateProfile(input: UpdateProfileInput): Promise<{ user: User }> {
+        return request("/api/user/profile", {
+            method: "PATCH",
+            body: JSON.stringify(input),
         });
     },
 };
