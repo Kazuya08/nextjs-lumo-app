@@ -5,10 +5,12 @@ interface ApiError {
 }
 
 async function request<T>(url: string, options?: RequestInit): Promise<T> {
+    const isForm = options?.body instanceof FormData;
+
     const res = await fetch(url, {
         ...options,
         headers: {
-            "Content-Type": "application/json",
+            ...(isForm ? {} : { "Content-Type": "application/json" }),
             ...(options?.headers ?? {}),
         },
     });
@@ -53,5 +55,21 @@ export const authApi = {
 
     async logout(): Promise<void> {
         await fetch("/api/auth/logout", { method: "POST" });
+    },
+
+    async updateAvatar(file: File): Promise<{ user: User }> {
+        const form = new FormData();
+        form.append("file", file);
+
+        return request("/api/user/avatar", {
+            method: "POST",
+            body: form,
+        });
+    },
+
+    async removeAvatar(): Promise<{ user: User }> {
+        return request("/api/user/avatar", {
+            method: "DELETE",
+        });
     },
 };

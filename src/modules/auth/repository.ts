@@ -8,11 +8,17 @@ interface CreateUserInput {
     password: string;
 }
 
-function toPublicUser(user: { id: string; email: string; name: string }): User {
+function toPublicUser(user: {
+    id: string;
+    email: string;
+    name: string;
+    avatarUrl: string | null;
+}): User {
     return {
         id: user.id,
         email: user.email,
         name: user.name,
+        avatarUrl: user.avatarUrl,
     };
 }
 
@@ -51,4 +57,12 @@ export async function authenticateUser(email: string, password: string): Promise
 export async function findUserById(id: string): Promise<User | null> {
     const user = await prisma.user.findUnique({ where: { id } });
     return user ? toPublicUser(user) : null;
+}
+
+export async function updateUserAvatar(id: string, avatarUrl: string | null): Promise<User> {
+    const user = await prisma.user.update({
+        where: { id },
+        data: { avatarUrl },
+    });
+    return toPublicUser(user);
 }

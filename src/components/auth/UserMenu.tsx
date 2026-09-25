@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { User } from "@/modules/auth";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,11 +20,29 @@ interface UserMenuProps {
 }
 
 export function UserMenu({ user, onLogout }: UserMenuProps) {
+    const initial = user.name?.trim().charAt(0).toUpperCase() ?? "?";
+
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                    <UserIcon className="h-4 w-4" />
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    className="relative h-8 w-8 overflow-hidden rounded-full"
+                >
+                    {user.avatarUrl ? (
+                        <Image
+                            src={user.avatarUrl}
+                            alt={`Avatar de ${user.name}`}
+                            width={64}
+                            height={64}
+                            className="h-full w-full object-cover"
+                        />
+                    ) : (
+                        <span className="flex h-full w-full items-center justify-center text-sm font-semibold">
+                            {initial}
+                        </span>
+                    )}
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56" align="end" forceMount>
