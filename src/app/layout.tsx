@@ -4,7 +4,6 @@ import { NextIntlClientProvider } from "next-intl";
 import ptMessages from "../../messages/pt.json";
 
 import { Geist, Geist_Mono } from "next/font/google";
-// @ts-expect-error Next.js handles global CSS imports; TypeScript may not resolve side-effect imports here.
 import "./globals.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
