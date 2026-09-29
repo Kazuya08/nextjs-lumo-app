@@ -2,13 +2,36 @@
     "GameList": {
         "placeholder": "Search games on IGDB…",
         "emptyQuery": "Type to search games on IGDB.",
-        "loading": "Loading…",
         "emptyResults": "No games found.",
-        "noPlatforms": "Platforms not informed",
-        "hours": "Average time to beat: ~{hours}h",
-        "hoursHastily": "Hastily: ~{hours}h",
-        "hoursComplete": "Completionist: ~{hours}h",
-        "coverAlt": "Cover of {title}"
+        "clear": "Clear search",
+        "error": "Error while searching games.",
+        "resultsCount": "{count, plural, =1 {1 game found} other {# games found}}",
+        "keyboardHint": "use ↑ ↓ to navigate and Enter to see details"
+    },
+    "GameDetails": {
+        "openDetails": "See details",
+        "close": "Close",
+        "ratingSr": "average user rating",
+        "ratingCount": "{count, plural, =1 {1 rating} other {# ratings}}",
+        "moreGenres": "+{count}",
+        "platforms": "Platforms",
+        "gameModes": "Game modes",
+        "perspectives": "Perspectives",
+        "companies": "Developers",
+        "franchise": "Franchise",
+        "release": "Release",
+        "timeToBeatTitle": "Time to beat",
+        "timeToBeat": {
+            "hastily": "Hastily",
+            "normally": "Main story",
+            "completely": "Completionist"
+        },
+        "watchTrailer": "Watch trailer",
+        "screenshots": "Screenshots",
+        "screenshotAlt": "Screenshot {index} of {title}",
+        "detailsError": "Could not load more details.",
+        "previous": "Previous",
+        "next": "Next"
     },
     "HomePage": {
         "title": "Hello world!"

@@ -2,13 +2,36 @@
     "GameList": {
         "placeholder": "Buscar jogo no IGDB…",
         "emptyQuery": "Digite para buscar jogos no IGDB.",
-        "loading": "Carregando…",
         "emptyResults": "Nenhum jogo encontrado.",
-        "noPlatforms": "Plataformas não informadas",
-        "hours": "Tempo médio para zerar: ~{hours}h",
-        "hoursHastily": "As pressas: ~{hours}h",
-        "hoursComplete": "Completo: ~{hours}h",
-        "coverAlt": "Capa de {title}"
+        "clear": "Limpar busca",
+        "error": "Erro ao buscar jogos.",
+        "resultsCount": "{count, plural, =1 {1 jogo encontrado} other {# jogos encontrados}}",
+        "keyboardHint": "use ↑ ↓ para navegar e Enter para ver detalhes"
+    },
+    "GameDetails": {
+        "openDetails": "Ver detalhes",
+        "close": "Fechar",
+        "ratingSr": "nota média dos usuários",
+        "ratingCount": "{count, plural, =1 {1 avaliação} other {# avaliações}}",
+        "moreGenres": "+{count}",
+        "platforms": "Plataformas",
+        "gameModes": "Modos de jogo",
+        "perspectives": "Perspectivas",
+        "companies": "Desenvolvedoras",
+        "franchise": "Franquia",
+        "release": "Lançamento",
+        "timeToBeatTitle": "Tempo para zerar",
+        "timeToBeat": {
+            "hastily": "Na correria",
+            "normally": "História principal",
+            "completely": "Completista"
+        },
+        "watchTrailer": "Assistir trailer",
+        "screenshots": "Screenshots",
+        "screenshotAlt": "Screenshot {index} de {title}",
+        "detailsError": "Não foi possível carregar mais detalhes.",
+        "previous": "Anterior",
+        "next": "Próxima"
     },
     "HomePage": {
         "title": "Oi mundo!"
