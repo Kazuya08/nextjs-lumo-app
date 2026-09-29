@@ -32,6 +32,44 @@ const updates = [
     // },
 
     {
+        version: "v0.2.0",
+        date: "28 de setembro de 2026",
+        title: "Busca de Jogos com Detalhes",
+        description:
+            "A busca no catálogo da IGDB agora conta com sinopse, nota, gêneros e tempo para zerar, além de uma página de detalhes completa para cada jogo.",
+        isLatest: true,
+        changes: [
+            {
+                type: "NOVO",
+                text: "Página de detalhes do jogo com artwork de fundo, trailer, screenshots em lightbox, data de lançamento, desenvolvedoras, franquia e modos de jogo.",
+            },
+            {
+                type: "NOVO",
+                text: "Detalhes carregados sob demanda, só quando um jogo é aberto, para a busca continuar instantânea.",
+            },
+            {
+                type: "NOVO",
+                text: "Navegação por teclado: Ctrl+K foca a busca, as setas percorrem os resultados, Enter abre os detalhes e Esc fecha.",
+            },
+            {
+                type: "MELHORIA",
+                text: "O resultado da busca agora mostra sinopse, gêneros, nota média, plataformas e tempo para zerar em três níveis: na correria, história principal e completista.",
+            },
+            {
+                type: "MELHORIA",
+                text: "Prévia dos detalhes direto no resultado: o card expande ao passar o mouse ou ao receber foco pelo teclado.",
+            },
+            {
+                type: "MELHORIA",
+                text: "Esqueleto de carregamento, contador de resultados, botão para limpar a busca e aviso de erro.",
+            },
+            {
+                type: "DESIGN",
+                text: "Cards com elevação suave, nota sobre a capa e destaque visual do item em foco.",
+            },
+        ],
+    },
+    {
         version: "v0.1.0",
         date: "24 de setembro de 2026",
         title: "Identidade e Evolução do Perfil",
