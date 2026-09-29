@@ -106,7 +106,7 @@ export function SiteFooter() {
                         <span className="bg-primary/15 text-primary px-2 py-0.5 rounded font-bold border border-primary/20">
                             MVP v0.1.0
                         </span>
-                        <Link href="/versoes" className="hover:underline">
+                        <Link href="/changelog" className="hover:underline">
                             Histórico de Versões
                         </Link>
                     </div>
