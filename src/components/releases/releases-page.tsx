@@ -14,13 +14,7 @@ import type { UpcomingRelease } from "@/modules/catalog/types";
 
 interface ReleasesPageProps {
     initialGames: UpcomingRelease[];
-    initialStartDate: string;
     initialEndDate: string;
-}
-
-interface ReleaseWindow {
-    start: string;
-    end: string;
 }
 
 type ReleaseFilter = "all" | "following";
@@ -128,11 +122,7 @@ function mergeGames(currentGames: UpcomingRelease[], newGames: UpcomingRelease[]
     });
 }
 
-export function ReleasesPage({
-    initialGames,
-    initialStartDate,
-    initialEndDate,
-}: ReleasesPageProps) {
+export function ReleasesPage({ initialGames, initialEndDate }: ReleasesPageProps) {
     const [games, setGames] = useState<UpcomingRelease[]>(initialGames);
 
     const [currentEndDate, setCurrentEndDate] = useState(initialEndDate);
@@ -144,13 +134,6 @@ export function ReleasesPage({
     const [following, setFollowing] = useState<Set<number>>(new Set());
 
     const [filter, setFilter] = useState<ReleaseFilter>("all");
-
-    const [setLoadedWindows] = useState<ReleaseWindow[]>([
-        {
-            start: initialStartDate,
-            end: initialEndDate,
-        },
-    ]);
 
     const allLoadedGames = useMemo(() => {
         const uniqueGames = new Map<number, UpcomingRelease>();
@@ -245,14 +228,6 @@ export function ReleasesPage({
             setGames((currentGames) => mergeGames(currentGames, result.games));
 
             setCurrentEndDate(nextEnd);
-
-            setLoadedWindows((currentWindows) => [
-                ...currentWindows,
-                {
-                    start: nextStart,
-                    end: nextEnd,
-                },
-            ]);
         } catch (error) {
             console.error("Erro ao carregar mais lançamentos:", error);
 

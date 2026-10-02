@@ -13,5 +13,5 @@ function getInitialReleaseWindow() {
 export default async function Page() {
     const { start, end } = getInitialReleaseWindow();
     const games = await getUpcomingReleases(start, end, 50);
-    return <ReleasesPage initialGames={games} initialStartDate={start} initialEndDate={end} />;
+    return <ReleasesPage initialGames={games} initialEndDate={end} />;
 }
