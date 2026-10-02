@@ -23,3 +23,17 @@ export interface CatalogGameDetails extends CatalogGame {
     trailerId: string | null;
     franchise?: string;
 }
+
+export interface UpcomingRelease {
+    id: number;
+    title: string;
+    cover: string | null;
+    releaseDate: string;
+    platforms: string[];
+    genres: string[];
+    developers: string[];
+    publishers: string[];
+    rating: number | null;
+    popularity: number | null;
+    hypes: number | null;
+}
