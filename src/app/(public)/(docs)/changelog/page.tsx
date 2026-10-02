@@ -23,14 +23,45 @@ const updates = [
     //     isLatest: true,
     //     changes: [
     //         { type: "NOVO", text: "Exemplo" },
-    //         { type: "NOVO", text: "Exemplo." },
-    //         { type: "NOVO", text: "Exemplo" },
-    //         { type: "NOVO", text: "Exemplo" },
     //         { type: "MELHORIA", text: "Exemplo" },
     //         { type: "DESIGN", text: "Exemplo" },
+    //         { type: "CORREÇÃO", text: "Exemplo" },
     //     ],
     // },
-
+    {
+        version: "v0.3.0",
+        date: "2 de outubro de 2026",
+        title: "Hub e Próximos Lançamentos",
+        description:
+            "Nova área principal do Lumo com integração à IGDB para acompanhar os próximos lançamentos de jogos.",
+        isLatest: true,
+        changes: [
+            {
+                type: "NOVO",
+                text: "Adicionada a nova página Hub, reunindo atividades dos amigos, recomendações, desafios, XP, jogos em destaque e próximos lançamentos.",
+            },
+            {
+                type: "NOVO",
+                text: "Adicionada a página de Próximos Lançamentos com dados reais obtidos através da IGDB.",
+            },
+            {
+                type: "NOVO",
+                text: "Adicionada a integração com a IGDB para buscar jogos com datas de lançamento futuras.",
+            },
+            {
+                type: "NOVO",
+                text: "Adicionados cards de jogos com capa, data de lançamento, plataformas e acompanhamento de lançamentos.",
+            },
+            {
+                type: "MELHORIA",
+                text: "O Hub passou a exibir automaticamente os cinco próximos lançamentos disponíveis.",
+            },
+            {
+                type: "DESIGN",
+                text: "Criado o layout inicial do Hub seguindo o sistema visual escuro em azul e grafite do Lumo.",
+            },
+        ],
+    },
     {
         version: "v0.2.0",
         date: "28 de setembro de 2026",

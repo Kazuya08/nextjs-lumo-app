@@ -9,14 +9,24 @@ import { RegisterForm } from "@/components/auth/RegisterForm";
 import { PublicGuard } from "@/components/auth/AuthGuard";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { Sparkles, Compass, Trophy, Gamepad2, Sun, Moon, ArrowLeft } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 export default function AuthPage() {
     const router = useRouter();
     const [isDarkMode, setIsDarkMode] = useState(true);
     const [isRegister, setIsRegister] = useState(false);
 
+    const searchParams = useSearchParams();
+    console.log("searchParams:", searchParams?.toString());
+    const method = searchParams?.get("method");
+    useEffect(() => {
+        if (method === "new") {
+            setIsRegister(true);
+        }
+    }, [method]);
+
     const loginImage = "https://i.pinimg.com/736x/c7/63/64/c7636409decf56ab820fe24f3a5a62d8.jpg";
-    const registerImage = "https://i.pinimg.com/736x/82/81/25/8281255e347781b29ce3758064d4a362.jpg";
+    const registerImage = "https://wallpapercave.com/wp/wp15320780.png";
 
     useEffect(() => {
         const isDarkHtml = document.documentElement.classList.contains("dark");
@@ -65,7 +75,7 @@ export default function AuthPage() {
                                         priority
                                     />
                                     <NextImage
-                                        src="https://i.pinimg.com/736x/82/81/25/8281255e347781b29ce3758064d4a362.jpg"
+                                        src="https://i.pinimg.com/736x/c7/63/64/c7636409decf56ab820fe24f3a5a62d8.jpg"
                                         alt="Nova Aventura"
                                         fill
                                         sizes="(min-width: 1024px) 50vw, 0vw"
