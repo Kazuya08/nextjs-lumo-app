@@ -56,7 +56,11 @@ export default function RootLayout({
                 >
                     <QueryClientProvider client={queryClient}>
                         <AuthProvider>
-                            <NextIntlClientProvider locale="pt" messages={ptMessages}>
+                            <NextIntlClientProvider
+                                locale="pt"
+                                messages={ptMessages}
+                                timeZone="America/Sao_Paulo"
+                            >
                                 <div className="relative flex min-h-screen flex-col overflow-hidden">
                                     {!isSpecialPage && <SiteHeader />}
 

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Star, Users } from "lucide-react";
 
 interface FriendActivity {
@@ -122,9 +123,12 @@ export default function FriendsActivity() {
                         >
                             {/* Avatar */}
                             <Link href={`/profile/${activity.username}`} className="shrink-0">
-                                <img
+                                <Image
                                     src={activity.avatar}
                                     alt={`Avatar de ${activity.username}`}
+                                    width={32}
+                                    height={32}
+                                    sizes="32px"
                                     className="h-8 w-8 rounded-full object-cover border border-border/60 transition-opacity hover:opacity-80"
                                 />
                             </Link>

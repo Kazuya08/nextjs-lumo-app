@@ -4,6 +4,8 @@ import { useState } from "react";
 
 import type { ElementType } from "react";
 
+import Image from "next/image";
+
 import {
     ArrowRight,
     Check,
@@ -221,16 +223,13 @@ export function HomePage({ upcomingGames }: HomePageProps) {
                                         {/* Corpo */}
 
                                         <div className="mt-4 flex gap-4">
-                                            <img
+                                            <Image
                                                 src={recommendation.image}
                                                 alt={recommendation.game}
-                                                className="
-                                                        h-36
-                                                        w-24
-                                                        shrink-0
-                                                        rounded-lg
-                                                        object-cover
-                                                    "
+                                                width={96}
+                                                height={144}
+                                                sizes="96px"
+                                                className="h-36 w-24 shrink-0 rounded-lg object-cover"
                                             />
 
                                             <div className="min-w-0 flex-1">
@@ -526,9 +525,12 @@ export function HomePage({ upcomingGames }: HomePageProps) {
                                             {game.position}
                                         </span>
 
-                                        <img
+                                        <Image
                                             src={game.image}
                                             alt={game.title}
+                                            width={32}
+                                            height={40}
+                                            sizes="32px"
                                             className="h-10 w-8 rounded object-cover"
                                         />
 

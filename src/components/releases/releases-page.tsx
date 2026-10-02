@@ -95,10 +95,6 @@ function getReleaseStatus(releaseDate: string): "previous" | "today" | "upcoming
     return "upcoming";
 }
 
-function isReleasedToday(releaseDate: string) {
-    return getReleaseStatus(releaseDate) === "today";
-}
-
 function getMonthInfo(releaseDate: string) {
     const date = new Date(releaseDate);
 
@@ -149,7 +145,7 @@ export function ReleasesPage({
 
     const [filter, setFilter] = useState<ReleaseFilter>("all");
 
-    const [loadedWindows, setLoadedWindows] = useState<ReleaseWindow[]>([
+    const [setLoadedWindows] = useState<ReleaseWindow[]>([
         {
             start: initialStartDate,
             end: initialEndDate,
